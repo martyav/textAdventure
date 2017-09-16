@@ -39,13 +39,68 @@ player.tellUserYour("inventory")
 print("")
 player.look()
 print("")
-print("You can LOOK, check for EXITS, check your POCKETS, go LEFT DOWN RIGHT or UP, or QUIT. \n")
+print("You can LOOK, TAKE, USE, check for EXITS, check your fanny pack's POCKETS, go LEFT DOWN RIGHT or UP, cry for HELP, or QUIT. \n")
 
 while true {
     print("> ")
     let input = readLine()!.lowercased()
     
+    if input == "help" || input == "help!" || input == "help?" {
+        print("Here are a list of commands you can do:")
+        print("* look -- look around your current location")
+        print("* look at ___ -- look at an object, direction, or character")
+        print("* exits -- see all the exits")
+        print("* left, right, up, or down -- travel in that direction (from a 2D, top-down perspective)")
+        print("* take ___ -- put an object inside your fanny pack")
+        print("* use ___ -- use an object in your fanny pack")
+        print("* what's my ___ -- ask a personal question")
+        print("* quit -- quit the game")
+        continue
+    }
+    
+    if input == "what am i" || input == "what am i?" {
+        player.tellUserYour("kind")
+    }
+    
     let check = input.components(separatedBy: " ")
+    
+    let whatsMy = try! NSRegularExpression(pattern: "\\b(what's my)\\b", options: .caseInsensitive)
+    let whatsMyMatch = whatsMy.matches(in: input, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, input.characters.count))
+    
+    if !whatsMyMatch.isEmpty {
+        let query = check.last!
+        
+        switch query {
+        case "name":
+            player.tellUserYour("name")
+        case "age":
+            print("You recall a late 20th century pop-punk song from that time you had to take Classical Music Appreciation class. The music video they made you watch for it was very strange. Your teacher said it was designed to be comedic. People back had a strange sense of humor.")
+        case "species":
+            print("That's an ambigious question, and frankly kind of rude.")
+        case "race":
+            print("That's a rude question.")
+        case "class":
+            print("You're a humble citizen of the H.S.S. Cloud Mill, sponsored by Dream Makers Absolute Zero Incorporated, Twifoogle & Unilab.")
+        case "job":
+            print("You're unemployed.")
+        case "quest":
+            print("You don't have a 'quest'. You think that calling whatever your goal in life is your quest is actually kind of pretentious.")
+        case "goal":
+            print("You don't have any overarching goals. You like having fun, meeting people, smoking your pipe, exploring...")
+        case "deal":
+            print("You're kind of bored and lonely. It's tough being a monster sometimes. A lot of people think you're creepy just for existing. Others don't take you seriously, based purely on your appearance. Maybe the fanny pack and boxers don't help, but if they're going to think that anyway, why bother fitting in?")
+        case "gender":
+            print("You're still sorting that out, but you generally go by \(player.pronouns.joined(separator: "/")) pronouns when out in public.")
+        case "location":
+            print("You are here: \(player.here.location)")
+        case "status":
+            print("Single.")
+        case "sex":
+            print("You're still a virgin.")
+        default:
+            print("That's a weird question.")
+        }
+    }
     
     let take = try! NSRegularExpression(pattern: "\\b(take)\\b", options: .caseInsensitive)
     let takeMatch = take.matches(in: input, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, input.characters.count))
@@ -63,6 +118,63 @@ while true {
                     print("You can't take that!")
                 }
             }
+        }
+    }
+    
+    let use = try! NSRegularExpression(pattern: "\\b(use)\\b", options: .caseInsensitive)
+    let useMatch = use.matches(in: input, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, input.characters.count))
+    
+    if !useMatch.isEmpty {
+        let item = check.last!
+        
+        switch item {
+        case "pipe":
+            if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
+                print("You put the stuff inside the BAGGY in your PIPE and light it with your LIGHTER.")
+                continue
+            }
+            
+            if player.pockets["PIPE"] != nil {
+                print("You put the PIPE in your mouth. It's empty. You look kind of silly.")
+            } else {
+                print("What \(item)? You don't have a \(item).")
+            }
+        case "lighter":
+            if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
+                print("You put the stuff inside the BAGGY in your PIPE and light it with your LIGHTER.")
+                continue
+            }
+            
+            if player.pockets["LIGHTER"] != nil {
+                print("You flick the LIGHTER on. Ooh, pretty.")
+            } else {
+                print("What \(item)? You don't have a \(item).")
+            }
+        case "key":
+            if player.pockets["KEY"] != nil {
+                print("You try to use the KEY to unlock thin air.")
+            } else {
+                print("What \(item)? You don't have a \(item).")
+            }
+        case "scoobysnacks", "snacks", "treats", "dogtreats", "box":
+            if player.pockets["BOX"] != nil {
+                print("You eat a Scooby Snack. Yum!")
+            } else {
+                print("What \(item)? You don't have a \(item).")
+            }
+        case "baggy", "baggie", "bag":
+            if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
+                print("You put the stuff inside the BAGGY in your PIPE and smoke it.")
+                continue
+            }
+            
+            if player.pockets["BAGGY"] != nil {
+                print("You open up the BAGGY and sniff it. It's stinky.")
+            } else {
+                print("What \(item)? You don't have a \(item).")
+            }
+        default:
+            print("You can't do that!")
         }
     }
     
@@ -138,10 +250,15 @@ while true {
                 hasKey.printName()
                 hasKey.printDescription()
             }
-        case "scoobysnacks", "snacks", "treats", "dog treats":
+        case "scoobysnacks", "snacks", "treats", "dogtreats", "box":
             if let hasTreats = player.pockets["treats"] {
                 hasTreats.printName()
                 hasTreats.printDescription()
+            }
+        case "baggy", "baggie", "bag":
+            if let hasBaggy = player.pockets["baggy"] {
+                hasBaggy.printName()
+                hasBaggy.printDescription()
             }
         default:
             print("You can't look at that.")
@@ -208,6 +325,7 @@ while true {
         case "pockets":
             player.tellUserYour("inventory")
         case "quit":
+            print("Bye, \(player.name)!")
             exit(0)
         default:
             print("I don't understand.")
