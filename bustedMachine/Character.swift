@@ -64,6 +64,8 @@ class Player: Character {
             print("Your name is \(name).")
         case "pronouns":
             print("Your pronouns are \(pronouns.joined(separator: "/")).")
+        case "appearance":
+            print(appearance)
         case "inventory":
             print("You have", terminator: " ")
             guard pockets.count > 1 else {
