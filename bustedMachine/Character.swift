@@ -46,7 +46,7 @@ class Player: Character {
     var pronouns: [String]
     var kind: Kind
     var appearance: String
-    var currentLocation: Node
+    var here: Node
     var pockets: [String]
     
     init(name: String, pronouns: String, kind: Kind, appearance: String = "A mysterious being.", location: Node, pockets: [String] = []) {
@@ -54,7 +54,7 @@ class Player: Character {
         self.pronouns = pronouns.components(separatedBy: "/")
         self.kind = kind
         self.appearance = appearance
-        self.currentLocation = location
+        self.here = location
         self.pockets = pockets
     }
     
@@ -68,9 +68,9 @@ class Player: Character {
             print("You have", terminator: " ")
             guard pockets.count > 1 else {
                 if let oneItem = pockets.first {
-                    print("a \(oneItem) in your pockets.")
+                    print("a \(oneItem) in your fanny pack.")
                 } else {
-                    print("nothing in your pockets.")
+                    print("nothing in your fanny pack.")
                 }
                 
                 return
@@ -78,12 +78,13 @@ class Player: Character {
             
             for (index, object) in pockets.enumerated() {
                 if index == pockets.underestimatedCount {
-                    print("and \(object)", terminator: " ")
+                    print("and a \(object)", terminator: " ")
                 } else {
-                    print(object, terminator: " ")
+                    print("a \(object)", terminator: " ")
                 }
             }
-            print("in your pockets.")
+            
+            print("in your fanny pack.")
         default:
             print("What was that?")
         }
@@ -119,6 +120,48 @@ class Player: Character {
     }
     
     func look() {
-        print(currentLocation.description)
+        map.printDescription(here.location)
+    }
+    
+    func checkForExits() {
+        print("You check for exits: ")
+        map.printConnections(here.location)
+    }
+    
+    func travel(to direction: Direction) {
+        print("You go \(String(describing: direction).uppercased()).")
+        
+        switch direction {
+        case .Left:
+            guard let left = here.pathsOut.left else {
+                print("You can't go there!")
+                return
+            }
+            
+            here = left
+        case .Down:
+            guard let down = here.pathsOut.down else {
+                print("You can't go there!")
+                return
+            }
+            
+            here = down
+        case .Right:
+            guard let right = here.pathsOut.right else {
+                print("You can't go there!")
+                return
+            }
+            
+            here = right
+        case .Up:
+            guard let up = here.pathsOut.up else {
+            print("You can't go there!")
+            return
+        }
+        
+        here = up
+        }
+        
+        map.printDescription(here.location)
     }
 }
