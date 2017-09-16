@@ -15,6 +15,7 @@
 		05F833651F6CEAE800F117AC /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F833641F6CEAE800F117AC /* Node.swift */; };
 		05F833671F6CF0F400F117AC /* GameMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F833661F6CF0F400F117AC /* GameMap.swift */; };
 		05F833691F6CF12600F117AC /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F833681F6CF12600F117AC /* Graph.swift */; };
+		05F8336B1F6D972200F117AC /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F8336A1F6D972200F117AC /* Item.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,7 @@
 		05F833641F6CEAE800F117AC /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		05F833661F6CF0F400F117AC /* GameMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameMap.swift; sourceTree = "<group>"; };
 		05F833681F6CF12600F117AC /* Graph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
+		05F8336A1F6D972200F117AC /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				05F833641F6CEAE800F117AC /* Node.swift */,
 				05F833601F6CEA8600F117AC /* Direction.swift */,
 				05F8335E1F6CE5FE00F117AC /* Character.swift */,
+				05F8336A1F6D972200F117AC /* Item.swift */,
 				05F833661F6CF0F400F117AC /* GameMap.swift */,
 				05F833681F6CF12600F117AC /* Graph.swift */,
 			);
@@ -143,6 +146,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05F833691F6CF12600F117AC /* Graph.swift in Sources */,
+				05F8336B1F6D972200F117AC /* Item.swift in Sources */,
 				05F8335F1F6CE5FE00F117AC /* Character.swift in Sources */,
 				05F833561F6CE51900F117AC /* main.swift in Sources */,
 				05F8335D1F6CE55100F117AC /* Kind.swift in Sources */,

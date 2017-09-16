@@ -47,9 +47,9 @@ class Player: Character {
     var kind: Kind
     var appearance: String
     var here: Node
-    var pockets: [String]
+    var pockets: [String: Item]
     
-    init(name: String, pronouns: String, kind: Kind, appearance: String = "A mysterious being.", location: Node, pockets: [String] = []) {
+    init(name: String, pronouns: String, kind: Kind, appearance: String = "A mysterious being.", location: Node, pockets: [String: Item] = [:]) {
         self.name = name
         self.pronouns = pronouns.components(separatedBy: "/")
         self.kind = kind
@@ -64,13 +64,15 @@ class Player: Character {
             print("Your name is \(name).")
         case "pronouns":
             print("Your pronouns are \(pronouns.joined(separator: "/")).")
+        case "kind":
+            print("You are a \(kind).")
         case "appearance":
             print(appearance)
         case "inventory":
             print("You have", terminator: " ")
             guard pockets.count > 1 else {
                 if let oneItem = pockets.first {
-                    print("a \(oneItem) in your fanny pack.")
+                    print("a \(oneItem.key) in your fanny pack.")
                 } else {
                     print("nothing in your fanny pack.")
                 }
@@ -79,10 +81,10 @@ class Player: Character {
             }
             
             for (index, object) in pockets.enumerated() {
-                if index == pockets.underestimatedCount {
-                    print("and a \(object)", terminator: " ")
+                if index == pockets.count - 1 {
+                    print("and a \(object.key)", terminator: " ")
                 } else {
-                    print("a \(object)", terminator: " ")
+                    print("a \(object.key)", terminator: ", ")
                 }
             }
             
@@ -100,21 +102,21 @@ class Player: Character {
         self.pronouns = pronouns.components(separatedBy: CharacterSet.punctuationCharacters)
     }
     
-    func take(_ object: String) {
+    func take(_ object: Item) {
         guard pockets.count <= 6 else {
             print("Your pockets are full!")
             return
         }
         
-        pockets.append(object)
+        if object.isPocketable() {
+            pockets[object.name] = object
+        } else {
+            print("No! You can't take that!")
+        }
     }
     
     func retrieve(_ object: String) -> String {
-        if pockets.contains(object) {
-            return object
-        } else {
-            return "You don't have that on hand right now!"
-        }
+        return pockets[object]?.name ?? "You don't have that on hand right now!"
     }
     
     func say(_ text: String) {
@@ -123,6 +125,10 @@ class Player: Character {
     
     func look() {
         map.printDescription(here.location)
+    }
+    
+    func look(at object: Item) {
+        object.printDescription()
     }
     
     func checkForExits() {

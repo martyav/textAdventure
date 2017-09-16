@@ -12,6 +12,8 @@ class Node: Equatable {
     let location: String
     var description: String
     var pathsOut: Path
+    var objects: [Item]?
+    var npcs: [NonPlayer]?
     
     static func ==(lhs: Node, rhs: Node) -> Bool {
         return lhs.location == rhs.location &&
