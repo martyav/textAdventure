@@ -12,17 +12,19 @@ class Node: Equatable {
     let location: String
     var description: String
     var pathsOut: Path
-    var objects: [Item]?
-    var npcs: [NonPlayer]?
+    var objects: [String: InanimateObject]
+    var npcs: [String: NonPlayer]
     
     static func ==(lhs: Node, rhs: Node) -> Bool {
         return lhs.location == rhs.location &&
             lhs.description == rhs.description
     }
     
-    init(location: String, description: String, pathsOut: Path = Path((nil,nil,nil,nil))) {
+    init(location: String, description: String, pathsOut: Path = Path((nil,nil,nil,nil)), objects: [String: InanimateObject] = [:], npcs: [String: NonPlayer] = [:]) {
         self.location = location
         self.description = description
         self.pathsOut = pathsOut
+        self.objects = objects
+        self.npcs = npcs
     }
 }
