@@ -137,7 +137,6 @@ class Player: Character {
     }
     
     func travel(to direction: Direction) {
-        print("You go \(String(describing: direction).uppercased()).")
         
         switch direction {
         case .Left:
@@ -170,6 +169,7 @@ class Player: Character {
         here = up
         }
         
+        print("You go \(String(describing: direction).uppercased()).")
         map.printDescription(here.location)
     }
 }
