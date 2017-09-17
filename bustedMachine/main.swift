@@ -39,6 +39,8 @@ print(player.here.description)
 
 while true {
     print(">")
-    let input = readLine()!
-    print(responder.respond(to: input) + "\n")
+    if let input = readLine() {
+        print(responder.respond(to: input) + "\n")
+        responder.previousCommand = input
+    }
 }

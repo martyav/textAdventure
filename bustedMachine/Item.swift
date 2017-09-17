@@ -14,8 +14,7 @@ protocol InanimateObject {
     var pocketable: Bool { get }
     
     func isPocketable() -> Bool
-    func printName()
-    func printDescription()
+    func stateName() -> String
 }
 
 struct Item: InanimateObject {
@@ -23,24 +22,22 @@ struct Item: InanimateObject {
     var description: String
     var pocketable: Bool
     var contents: [String: Item]
+    var simpleUse: String
     
-    init(name: String, description: String, pocketable: Bool, contents: [String:Item] = [:]) {
+    init(name: String, description: String, pocketable: Bool, contents: [String:Item] = [:], simpleUse: String = "") {
         self.name = name
         self.description = description
         self.pocketable = pocketable
         self.contents = contents
+        self.simpleUse = simpleUse
     }
     
     func isPocketable() -> Bool {
         return pocketable
     }
     
-    func printName() {
-        print("This is a \(name)")
-    }
-    
-    func printDescription() {
-        print(description)
+    func stateName() -> String {
+        return "This is a \(name)."
     }
 }
 
@@ -65,12 +62,8 @@ struct Vehicle: InanimateObject {
         return allowedOn
     }
     
-    func printName() {
-        print("This is \(name)")
-    }
-    
-    func printDescription() {
-        print(description)
+    func stateName() -> String {
+        return "This is \(name)"
     }
 }
 
@@ -95,11 +88,7 @@ struct Building: InanimateObject {
         return allowedIn
     }
     
-    func printName() {
-        print("This is \(name)")
-    }
-    
-    func printDescription() {
-        print(description)
+    func stateName() -> String {
+        return "This is \(name)"
     }
 }
