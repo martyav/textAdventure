@@ -32,9 +32,13 @@ let player = Player(name: name, pronouns: pronouns, kind: .Monster, appearance: 
 
 let responder = InputResponder(player: player, area: map)
 
-print(responder.respond(to: "help") + "\n")
-responder.stackUp("help")
-print(responder.respond(to: "down") + "\n")
-responder.stackUp("down")
-print(responder.respond(to: "repeat") + "\n")
-print(responder.respond(to: "exits") + "\n")
+print("Welcome, \(player.name)!\n")
+print("You are a \(player.kind). \n")
+print(player.appearance + "\n")
+print(player.here.description)
+
+while true {
+    print(">")
+    let input = readLine()!
+    print(responder.respond(to: input) + "\n")
+}

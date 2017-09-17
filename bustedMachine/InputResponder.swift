@@ -15,6 +15,7 @@ class InputResponder {
         , "look"
         , "help"
         , "exits"
+        , "exist"
         , "pockets"
         , "use"
         , "what"
@@ -25,6 +26,7 @@ class InputResponder {
         , "down"
         , "right"
         , "up"
+        , "quit"
     ]
     
     var previousCommandStack: [String]
@@ -74,7 +76,7 @@ class InputResponder {
             print("Bye, \(player.name)!")
             exit(0)
         case "look":
-            return look(at: array[array.count - 1])
+            return look(at: "down")
         default:
             return "??"
         }
@@ -170,46 +172,43 @@ class InputResponder {
         return "You go \(direction.uppercased()).\n\(player.here.description)"
     }
     
-    func look(at name: String) -> String {
-        print(name)
-        /*
-        if let found = area.allNames[name] {
+    func look(at thing: String) -> String {
+        if let found = area.allNames[thing] {
             return found.description
-        } else if let found = player.here.objects[name.uppercased()] {
+        } else if let found = player.here.objects[thing.uppercased()] {
             return found.description
-        } else if let found = player.pockets[name.uppercased()] {
+        } else if let found = player.pockets[thing.uppercased()] {
             return found.description
         }
- */
         
-        switch name {
+        switch thing {
         case "yourself", "mirror", "reflection":
             return player.appearance
         case "around":
             return player.here.description
         case "left":
             if let left = player.here.pathsOut.left {
-                return "You see a \(left.location)."
+                return "You look \(thing) and see a \(left.location)."
             } else {
-                return "You see a deadend"
+                return "You see a deadend to your \(thing)."
             }
         case "down":
             if let down = player.here.pathsOut.down {
-                return "You see a \(down.location)."
+                return "You look \(thing) and see a \(down.location)."
             } else {
-                return "You see a deadend"
+                return "You see a deadend to your \(thing)."
             }
         case "right":
             if let right = player.here.pathsOut.right {
-                return "You see a \(right.location)."
+                return "You look \(thing) and see a \(right.location) ."
             } else {
-                return "You see a deadend"
+                return "You see a deadend to your \(thing)."
             }
         case "up":
             if let up = player.here.pathsOut.up {
-                return "You see a \(up.location)."
+                return "You look \(thing) and see a \(up.location)."
             } else {
-                return "You see a deadend"
+                return "You see a deadend to your \(thing)."
             }
         case "pockets":
             return pockets()
@@ -219,7 +218,7 @@ class InputResponder {
     }
     
     func existentialism() -> String {
-        return "Your name is \(player.name) and you are a \(player.kind).\n \(player.appearance)"
+        return "Your name is \(player.name) and you are a \(player.kind).\n\n\(player.appearance)"
     }
 }
 
