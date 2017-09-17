@@ -17,6 +17,7 @@
 		05F833691F6CF12600F117AC /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F833681F6CF12600F117AC /* Graph.swift */; };
 		05F8336B1F6D972200F117AC /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F8336A1F6D972200F117AC /* Item.swift */; };
 		05F8336D1F6DA86700F117AC /* EncounterableObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F8336C1F6DA86700F117AC /* EncounterableObjects.swift */; };
+		05F8336F1F6DE82D00F117AC /* InputResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F8336E1F6DE82D00F117AC /* InputResponder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +44,7 @@
 		05F833681F6CF12600F117AC /* Graph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		05F8336A1F6D972200F117AC /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		05F8336C1F6DA86700F117AC /* EncounterableObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncounterableObjects.swift; sourceTree = "<group>"; };
+		05F8336E1F6DE82D00F117AC /* InputResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputResponder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				05F833551F6CE51900F117AC /* main.swift */,
+				05F8336E1F6DE82D00F117AC /* InputResponder.swift */,
 				05F8335C1F6CE55100F117AC /* Kind.swift */,
 				05F833621F6CEAC300F117AC /* Path.swift */,
 				05F833641F6CEAE800F117AC /* Node.swift */,
@@ -154,6 +157,7 @@
 				05F8335F1F6CE5FE00F117AC /* Character.swift in Sources */,
 				05F833561F6CE51900F117AC /* main.swift in Sources */,
 				05F8335D1F6CE55100F117AC /* Kind.swift in Sources */,
+				05F8336F1F6DE82D00F117AC /* InputResponder.swift in Sources */,
 				05F833651F6CEAE800F117AC /* Node.swift in Sources */,
 				05F833671F6CF0F400F117AC /* GameMap.swift in Sources */,
 				05F833631F6CEAC300F117AC /* Path.swift in Sources */,
