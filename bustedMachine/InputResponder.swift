@@ -392,6 +392,7 @@ class InputResponder {
                 print("\(Werewolf.name) asks if \(Werewolf.pronouns[0]) can have a Scooby Snack.")
                 print(">")
                 let response = readLine()!
+                print(respond(to: response))
                 let yesOrNo = response.components(separatedBy: " ").last
                 if yesOrNo == "yes" || yesOrNo == "yeah" || yesOrNo == "yep" || yesOrNo == "sure" || yesOrNo == "certainly" {
                     print("The werewolf puts the Scooby Snack in \(Werewolf.pronouns[2]) pipe and smokes it. \(Werewolf.pronouns[0]) is so delighted that \(Werewolf.pronouns[0]) gives you \(Werewolf.pronouns[2]) LIGHTER to keep.")
