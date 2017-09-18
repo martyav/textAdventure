@@ -281,7 +281,7 @@ class InputResponder {
                     return "You can't take that!"
                 }
             }
-            return "What? Nothing like that is here."
+            return "Take what?"
         }
         return "There's nothing to take here."
     }
@@ -328,25 +328,25 @@ class InputResponder {
             if let left = player.here.pathsOut.left {
                 return "You look \(thing) and see a \(left.location)."
             } else {
-                return "You see a deadend to your \(thing)."
+                return "You look \(thing) and see a deadend."
             }
         case "down":
             if let down = player.here.pathsOut.down {
                 return "You look \(thing) and see a \(down.location)."
             } else {
-                return "You see a deadend to your \(thing)."
+                return "You look \(thing) and see a deadend."
             }
         case "right":
             if let right = player.here.pathsOut.right {
                 return "You look \(thing) and see a \(right.location)."
             } else {
-                return "You see a deadend to your \(thing)."
+                return "You look \(thing) and see a deadend."
             }
         case "up":
             if let up = player.here.pathsOut.up {
                 return "You look \(thing) and see a \(up.location)."
             } else {
-                return "You see a deadend to your \(thing)."
+                return "You look \(thing) and see a deadend."
             }
         case "pockets":
             return pockets()
@@ -387,13 +387,30 @@ class InputResponder {
         }
         
         switch item {
+        case "box", "treats", "dogtreats", "snacks", "scoobysnacks":
+            if player.here == werewolfPark && werewolfPark.description == "You are standing in a mucky forest. Bare black TREES grow in loose arrangements. A werewolf named \(Werewolf.name) is sitting on some LOGS." {
+                print("\(Werewolf.name) asks if \(Werewolf.pronouns[0]) can have a Scooby Snack.")
+                print(">")
+                let response = readLine()!
+                let yesOrNo = response.components(separatedBy: " ").last
+                if yesOrNo == "yes" || yesOrNo == "yeah" || yesOrNo == "yep" || yesOrNo == "sure" || yesOrNo == "certainly" {
+                    print("The werewolf puts the Scooby Snack in \(Werewolf.pronouns[2]) pipe and smokes it. \(Werewolf.pronouns[0]) is so delighted that \(Werewolf.pronouns[0]) gives you \(Werewolf.pronouns[2]) LIGHTER to keep.")
+                    return respond(to: "take lighter")
+                } else if yesOrNo == "no" || yesOrNo == "nope" || yesOrNo == "nah" || yesOrNo == "away" || yesOrNo == "off" {
+                    return "\(Werewolf.name) seems dejected."
+                } else {
+                  return "\(Werewolf.name) tilts \(Werewolf.pronouns[2]) head curiously and says, \"Mrr?\"."
+                }
+            }
+            
+            return justUse(it: item)
         case "pipe":
             if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
                 return "You put the stuff inside the BAGGY in your PIPE and light it with your LIGHTER."
             } else if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil {
                 return "You hold the LIGHTER up to the PIPE. It gets hot, but the PIPE is still empty."
             } else if player.pockets["PIPE"] != nil && player.pockets["BAGGY"] != nil {
-                return "You put the stuff inside the BAGGY in your PIPE. But you have no way to light it."
+                return "You take some of the stuff inside the BAGGY and put it in your PIPE. But you have no way to light it."
             }
             
             return justUse(it: item)
