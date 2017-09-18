@@ -142,6 +142,11 @@ class InputResponder {
     }
     
     func say(_ input: String) -> String {
+        if !player.here.npcs.isEmpty {
+            print("You say, \"\(input)\".")
+            return "You sense a presence..."
+        }
+        
         return "You say, \"\(input)\"."
     }
     
@@ -282,9 +287,9 @@ class InputResponder {
     }
     
     func drop(_ object: String) -> String {
-        if let hasObject = player.pockets[object] {
+        if let hasObject = player.pockets[object.uppercased()] {
             player.drop(hasObject)
-            return "You drop the \(object)."
+            return "You drop the \(object) on the ground. If you want it back, you'll have to remember to come back here and TAKE it."
         } else {
             return "How can you drop something you don't even have?"
         }
@@ -355,28 +360,56 @@ class InputResponder {
             }
             
             if let foundItem = player.here.objects[item.uppercased()] as? Item {
+                if foundItem.name == "HOLE" {
+                    // if the player tries to use the hole they die
+                    print(foundItem.simpleUse)
+                    return respond(to: "quit")
+                }
+                
+                if foundItem.name == "LOGS" {
+                    if let encounter = player.here.npcs[Werewolf.name] {
+                        print(foundItem.simpleUse)
+                        player.here.description = "You are standing in a mucky forest. Bare black TREES grow in loose arrangements. A werewolf named \(encounter.name) is sitting on some LOGS."
+                        return "\(encounter.name) emerges from the trees. \(encounter.pronouns[0].uppercased()) sits down and says, 'Hi'."
+                    } else {
+                        return foundItem.simpleUse
+                    }
+                }
+                
                 return foundItem.simpleUse
+            } else {
+                return error
             }
-            
-            return error
         }
         
         switch item {
         case "pipe":
             if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
                 return "You put the stuff inside the BAGGY in your PIPE and light it with your LIGHTER."
+            } else if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil {
+                return "You hold the LIGHTER up to the PIPE. It gets hot, but the PIPE is still empty."
+            } else if player.pockets["PIPE"] != nil && player.pockets["BAGGY"] != nil {
+                return "You put the stuff inside the BAGGY in your PIPE. But you have no way to light it."
             }
             
             return justUse(it: item)
         case "lighter":
             if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
                 return "You put the stuff inside the BAGGY in your PIPE and light it with your LIGHTER."
+            } else if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil {
+                return "You hold the LIGHTER up to the PIPE. It gets hot, but the PIPE is still empty."
+            } else if player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
+                return "You try to use the LIGHTER on the contents of the BAGGY. The contents light on fire a little, and the smoke drifts away..."
             }
             
             return justUse(it: item)
         case "baggy", "baggie", "bag":
             if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
                 return "You put the stuff inside the BAGGY in your PIPE and smoke it."
+            } else if player.pockets["PIPE"] != nil && player.pockets["BAGGY"] != nil {
+                return "You try to use the LIGHTER on the contents of the BAGGY. The contents light on fire a little, and the smoke drifts away..."
+            } else if player.pockets["PIPE"] != nil && player.pockets["BAGGY"] != nil {
+                return "You put the stuff inside the BAGGY in your PIPE. But you have no way to light it."
             }
             
             return justUse(it: item)
