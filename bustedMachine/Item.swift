@@ -21,19 +21,25 @@ struct Item: InanimateObject {
     var name: String
     var description: String
     var pocketable: Bool
+    let replenishable: Bool
     var contents: [String: Item]
     var simpleUse: String
     
-    init(name: String, description: String, pocketable: Bool, contents: [String:Item] = [:], simpleUse: String = "") {
+    init(name: String, description: String, pocketable: Bool, replenishable: Bool = false, contents: [String:Item] = [:], simpleUse: String = "") {
         self.name = name
         self.description = description
         self.pocketable = pocketable
+        self.replenishable = replenishable
         self.contents = contents
         self.simpleUse = simpleUse
     }
     
     func isPocketable() -> Bool {
         return pocketable
+    }
+    
+    func isReplenishable() -> Bool {
+        return replenishable
     }
     
     func stateName() -> String {
