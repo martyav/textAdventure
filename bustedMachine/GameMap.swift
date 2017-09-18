@@ -38,7 +38,7 @@ func generateGameWorld() {
     map.add(newNode: farHighway, to: nearHighway, at: .Up)
     map.add(newNode: fartherHighway, to: farHighway, at: .Up)
     map.add(newNode: farthestHighway, to: fartherHighway, at: .Up)
-    map.add(newNode: farthestHighway, to: farthestHighway, at: .Up)
+    // map.add(newNode: farthestHighway, to: farthestHighway, at: .Up)
     map.add(newNode: forest, to: farHighway, at: .Right)
     map.add(newNode: forest, to: weedyField, at: .Up)
     map.add(newNode: deepForest, to: forest, at: .Right)

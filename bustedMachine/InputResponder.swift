@@ -12,6 +12,7 @@ class InputResponder {
     let keywords = [
         "repeat"
         ,"take"
+        , "drop"
         , "look"
         , "help"
         , "exits"
@@ -106,6 +107,8 @@ class InputResponder {
             return say(slice.joined(separator: " "))
         case _ where inspectInput.count > 1 && firstWord == "take":
             return take(lastWord)
+        case _ where inspectInput.count > 1 && firstWord == "drop":
+            return drop(lastWord)
         case _ where inspectInput.count > 1 && firstWord == "change":
             return change(lastWord)
         case _ where inspectInput.count > 1 && firstWord == "use":
@@ -257,26 +260,34 @@ class InputResponder {
     func take(_ object: String) -> String {
         if !player.here.objects.isEmpty {
             if let hasObject = player.here.objects[object.uppercased()] {
-                if hasObject.isPocketable() {
-                    if player.pockets.count < 6 {
-                        player.take(hasObject as! Item)
-                        player.here.objects[object] = nil
-                        if object.characters.last == "s" && object != "grass" {
-                            return "You take the \(object) and put them in your fanny pack."
-                        } else {
-                            return "You take the \(object) and put it in your fanny pack."
-                        }
+                guard let item = hasObject as? Item else { return "You can't take that!" }
+                
+                if item.isPocketable() {
+                    player.take(item)
+                    
+                    guard player.pockets[item.name] != nil else { return "Your fanny pack is full! You have to DROP something."}
+                    
+                    if object.characters.last == "s" && object != "grass" {
+                        return "You take the \(object) and put them in your fanny pack."
                     } else {
-                        return "Your fanny pack is full!"
+                        return "You take the \(object) and put it in your fanny pack."
                     }
                 } else {
                     return "You can't take that!"
-                    
                 }
             }
             return "What? Nothing like that is here."
         }
         return "There's nothing to take here."
+    }
+    
+    func drop(_ object: String) -> String {
+        if let hasObject = player.pockets[object] {
+            player.drop(hasObject)
+            return "You drop the \(object)."
+        } else {
+            return "How can you drop something you don't even have?"
+        }
     }
     
     func look(at thing: String) -> String {

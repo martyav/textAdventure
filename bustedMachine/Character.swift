@@ -59,24 +59,19 @@ class Player: Character {
     }
 
     func take(_ object: Item) {
+        guard player.pockets.count < 6 else {
+            return
+        }
+        
         pockets[object.name] = object
+        
+        if !object.isReplenishable() {
+            player.here.objects.removeValue(forKey: object.name)
+        }
     }
     
-    func retrieve(_ object: String) -> String {
-        return pockets[object]?.name ?? "You don't have that on hand right now!"
+    func drop(_ object: Item) {
+        player.here.objects[object.name] = object
+        player.pockets.removeValue(forKey: object.name)
     }
-    
-    func say(_ text: String) {
-        print(say)
-    }
-    
-    func look() {
-        map.printDescription(here.location)
-    }
-    
-    func checkForExits() {
-        print("You check for exits: ")
-        map.printConnections(here.location)
-    }
-    
 }
