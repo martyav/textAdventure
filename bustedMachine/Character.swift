@@ -19,12 +19,14 @@ class NonPlayer: Character {
     var pronouns: [String]
     var kind: Kind
     var appearance: String
+    var pockets: [String: Item]
     
-    init(name: String, pronouns: String, kind: Kind, appearance: String = "A mysterious being.", pockets: [String] = []) {
+    init(name: String, pronouns: String, kind: Kind, appearance: String = "A mysterious being.", pockets: [String: Item] = [:]) {
         self.name = name
         self.pronouns = pronouns.components(separatedBy: "/")
         self.kind = kind
         self.appearance = appearance
+        self.pockets = pockets
     }
     
     func tellUserYour(_ text: String) -> String {

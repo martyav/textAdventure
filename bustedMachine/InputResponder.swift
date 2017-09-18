@@ -48,6 +48,13 @@ class InputResponder {
         , "stomp"
     ]
     
+    let magicWords = [
+        "hitchhike"
+        , "smoke"
+        , "unlock"
+        , "sit"
+    ]
+    
     var previousCommand: String
     let player: Player
     var area: Graph
@@ -70,6 +77,15 @@ class InputResponder {
         return text.components(separatedBy: " ")
     }
     
+    func greeting() {
+        print("Welcome, \(player.name)!\n")
+        print("You are a \(player.kind). \n")
+        print(player.appearance + "\n")
+        print(player.here.description + "\n")
+        print(responder.pockets() + "\n")
+        print("Type help to see a list of commands at any time.")
+    }
+    
     func respond(to text: String) -> String {
         guard !text.isEmpty else {
             return "Type something!"
@@ -80,14 +96,14 @@ class InputResponder {
         let firstWord = inspectInput[0]
         let lastWord = inspectInput[inspectInput.count - 1]
         
-        guard keywords.contains(firstWord) else {
+        guard keywords.contains(firstWord) || ambleVerbs.contains(firstWord) else {
             return "Huh?"
         }
         
         switch input {
         case _ where inspectInput.count > 2 && (firstWord + " " + inspectInput[1]) == "what's my":
             return whatsMy(lastWord)
-        case _ where inspectInput.count > 2 && (firstWord + " " + inspectInput[1]) == "what's your":
+        case _ where inspectInput.count > 2 && (firstWord + " " + inspectInput[1]) == "what is my":
             return whatsMy(lastWord)
         case _ where inspectInput.count > 1 && ambleVerbs.contains(firstWord):
             return travel(lastWord)
@@ -101,12 +117,14 @@ class InputResponder {
             return look(at: lastWord)
         case "where am i", "where am i?", "where are we?", "where are we":
             return player.here.description
-        case "what am i", "what am i?", "exists":
+        case "what am i", "what am i?", "exist":
             return existentialism()
         case "help", "help!", "help?":
             return help()
         case "left", "right", "down", "up":
             return travel(input)
+        case "say":
+            return say(input)
         case "repeat":
             return repeatLast()
         case "exits":
@@ -125,8 +143,12 @@ class InputResponder {
         return "?"
     }
     
+    func say(_ input: String) -> String {
+        return "You say, \"\(input)\"."
+    }
+    
     func help() -> String {
-        return "Here are a list of commands you can use: \n * look -- look around your current location\n * look at ___ -- look at an object, direction, or character\n * exits -- see all the exits\n * left, right, up, or down -- travel in that direction (from a 2D, top-down perspective)\n * pockets -- check your fanny pack's pockets\n * take ___ -- put an object inside your fanny pack\n * use ___ -- use an object in your fanny pack\n * what's my ___ -- ask a personal question\n * repeat -- repeat the last command\n * quit -- quit the game\n"
+        return "Here are a list of some commands you can use: \n * look -- look around your current location\n * look at ___ -- look at an object, direction, or character\n * left, right, up, or down -- travel in that direction (from a 2D, top-down perspective)\n * exits -- see all the exits\n * pockets -- check your fanny pack's pockets\n * take ___ -- put an object inside your fanny pack\n * use ___ -- use an object in your fanny pack\n * say -- speak out loud\n * what's my ___ -- ask a personal question\n * repeat -- repeat the last command\n * quit -- quit the game"
     }
     
     func repeatLast() -> String {
@@ -293,7 +315,7 @@ class InputResponder {
             }
         case "right":
             if let right = player.here.pathsOut.right {
-                return "You look \(thing) and see a \(right.location) ."
+                return "You look \(thing) and see a \(right.location)."
             } else {
                 return "You see a deadend to your \(thing)."
             }
@@ -374,6 +396,8 @@ class InputResponder {
             return "You're a humble citizen of the H.S.S. Cloud Mill, a Habitable Sapce Station sponsored by Dream Makers Absolute Zero Incorporated, The Twifoogle Company, Japan, India, Pakistan, Nigeria, the Manhattan-Brooklyn-Queens Collective (MBQC), Pacific Northwest Incorporated States (PNIS) & Unilab."
         case "job":
             return "You're unemployed."
+        case "motivation":
+            return "You don't have a lot of motivation. You like to hang out, meet new people, explore, and smoke with your pals."
         case "quest":
             return "You don't have a 'quest'. You think that calling whatever your goal in life is your quest is actually kind of pretentious."
         case "goal":

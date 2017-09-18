@@ -11,10 +11,15 @@ import Foundation
 generateGameWorld()
 
 print("Hello. What is your name?")
-print("> ")
+print(">")
+
 let name = readLine()!.capitalized
-print("And what pronouns would you like? For example -- (1) she/her/hers, (2) he/him/his, (3) they/them/their")
+
+print("\nAnd what pronouns would you like? For example -- (1) she/her/hers, (2) he/him/his, (3) they/them/their")
+print("> ")
+
 var pronouns = readLine()!
+
 if let response = Int(pronouns) {
     switch response {
     case 1:
@@ -28,14 +33,13 @@ if let response = Int(pronouns) {
     }
 }
 
-let player = Player(name: name, pronouns: pronouns, kind: .Monster, appearance: "You have a short, rubbery snout, ending in a bright blue nose. Your hands have four fingers, and your feet have two toes. Your pointy ears swivel in the direction of sound. You are about 1.5 meters tall, all about. Tl;dr -- you are a fuzzy red monster-thing with big googly eyes. You're wearing a bandana around your neck, a fanny pack around your waist, a pair of gym socks, a pair of tennis shoes, and a pair of boxer shorts.", location: map.startingPoint, pockets: [Pipe.name: Pipe, Lighter.name: Lighter, Key.name: Key])
+player.name = name
+player.pronouns = pronouns.components(separatedBy: "/")
 
 let responder = InputResponder(player: player, area: map)
 
-print("Welcome, \(player.name)!\n")
-print("You are a \(player.kind). \n")
-print(player.appearance + "\n")
-print(player.here.description)
+print("")
+responder.greeting()
 
 while true {
     print(">")
