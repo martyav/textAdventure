@@ -300,6 +300,10 @@ class InputResponder {
             return found.description
         }
         
+        if let found = player.here.npcs[thing.capitalized] {
+            return found.appearance
+        }
+        
         if let found = player.here.objects[thing.uppercased()] {
             if let foundItem = found as? Item {
                 if !foundItem.contents.isEmpty {
@@ -370,7 +374,7 @@ class InputResponder {
                     if let encounter = player.here.npcs[Werewolf.name] {
                         print(foundItem.simpleUse)
                         player.here.description = "You are standing in a mucky forest. Bare black TREES grow in loose arrangements. A werewolf named \(encounter.name) is sitting on some LOGS."
-                        return "\(encounter.name) emerges from the trees. \(encounter.pronouns[0].uppercased()) sits down and says, 'Hi'."
+                        return "\(encounter.name) emerges from the trees. \(encounter.pronouns[0].capitalized) sits down and says, 'Hi'."
                     } else {
                         return foundItem.simpleUse
                     }
