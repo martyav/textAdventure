@@ -40,19 +40,13 @@ class InputResponder {
         , "jump"
         , "dance"
         , "amble"
+        , "climb"
         , "jog"
         , "hop"
         , "sneak"
         , "strafe"
         , "travel"
         , "stomp"
-    ]
-    
-    let magicWords = [
-        "hitchhike"
-        , "smoke"
-        , "unlock"
-        , "sit"
     ]
     
     var previousCommand: String
@@ -83,7 +77,7 @@ class InputResponder {
         print(player.appearance + "\n")
         print(player.here.description + "\n")
         print(responder.pockets() + "\n")
-        print("Type help to see a list of commands at any time.")
+        print("Type HELP (or help) to see a list of commands at any time.")
     }
     
     func respond(to text: String) -> String {
@@ -107,6 +101,9 @@ class InputResponder {
             return whatsMy(lastWord)
         case _ where inspectInput.count > 1 && ambleVerbs.contains(firstWord):
             return travel(lastWord)
+        case _ where inspectInput.count > 1 && firstWord == "say":
+            let slice = ArraySlice<String>(inspectInput[1..<inspectInput.count])
+            return say(slice.joined(separator: " "))
         case _ where inspectInput.count > 1 && firstWord == "take":
             return take(lastWord)
         case _ where inspectInput.count > 1 && firstWord == "change":
@@ -123,8 +120,6 @@ class InputResponder {
             return help()
         case "left", "right", "down", "up":
             return travel(input)
-        case "say":
-            return say(input)
         case "repeat":
             return repeatLast()
         case "exits":
@@ -148,7 +143,7 @@ class InputResponder {
     }
     
     func help() -> String {
-        return "Here are a list of some commands you can use: \n * look -- look around your current location\n * look at ___ -- look at an object, direction, or character\n * left, right, up, or down -- travel in that direction (from a 2D, top-down perspective)\n * exits -- see all the exits\n * pockets -- check your fanny pack's pockets\n * take ___ -- put an object inside your fanny pack\n * use ___ -- use an object in your fanny pack\n * say -- speak out loud\n * what's my ___ -- ask a personal question\n * repeat -- repeat the last command\n * quit -- quit the game"
+        return "Here is a list of some commands you can use: \n * look -- look around your current location\n * look at ___ -- look at an object, direction, or character\n * left, right, up, or down -- travel in that direction (from a 2D, top-down perspective)\n * exits -- see all the exits\n * pockets -- check your fanny pack's pockets\n * take ___ -- put an object inside your fanny pack\n * use ___ -- use an object\n * say -- speak out loud\n * what's my ___ -- ask a personal question\n * repeat -- repeat the last command\n * quit -- quit the game"
     }
     
     func repeatLast() -> String {
@@ -223,6 +218,10 @@ class InputResponder {
     func travel(_ direction: String) -> String {
         let error = "You can't go there!"
         
+        if player.here == gate && direction == "gate" {
+            return travel("down")
+        }
+        
         switch direction {
         case "left":
             guard let left = player.here.pathsOut.left else {
@@ -262,7 +261,11 @@ class InputResponder {
                     if player.pockets.count < 6 {
                         player.take(hasObject as! Item)
                         player.here.objects[object] = nil
-                        return "You take the \(object) and put it in your fanny pack."
+                        if object.characters.last == "s" && object != "grass" {
+                            return "You take the \(object) and put them in your fanny pack."
+                        } else {
+                            return "You take the \(object) and put it in your fanny pack."
+                        }
                     } else {
                         return "Your fanny pack is full!"
                     }
@@ -333,7 +336,19 @@ class InputResponder {
     }
     
     func use(_ item: String) -> String {
-        let error = "What \(item)? You don't have a \(item)."
+        let error = "What \(item)?."
+        
+        func justUse(it item: String) -> String {
+            if let heldItem = player.pockets[item.uppercased()] {
+                return heldItem.simpleUse
+            }
+            
+            if let foundItem = player.here.objects[item.uppercased()] as? Item {
+                return foundItem.simpleUse
+            }
+            
+            return error
+        }
         
         switch item {
         case "pipe":
@@ -341,43 +356,36 @@ class InputResponder {
                 return "You put the stuff inside the BAGGY in your PIPE and light it with your LIGHTER."
             }
             
-            if player.pockets["PIPE"] != nil {
-                return "You put the PIPE in your mouth. It's empty. You look kind of silly."
-            } else {
-                return error
-            }
+            return justUse(it: item)
         case "lighter":
             if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
                 return "You put the stuff inside the BAGGY in your PIPE and light it with your LIGHTER."
             }
-            if player.pockets["LIGHTER"] != nil {
-                return "You flick the LIGHTER on. Ooh, pretty."
-            } else {
-                return error
-            }
-        case "key":
-            if player.pockets["KEY"] != nil {
-                return "You try to use the KEY to unlock thin air."
-            } else {
-                return error
-            }
-        case "scoobysnacks", "snacks", "treats", "dogtreats", "box":
-            if player.pockets["BOX"] != nil {
-                return "You eat a Scooby Snack. Yum!"
-            } else {
-                return error
-            }
+            
+            return justUse(it: item)
         case "baggy", "baggie", "bag":
             if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
                 return "You put the stuff inside the BAGGY in your PIPE and smoke it."
             }
-            if player.pockets["BAGGY"] != nil {
-                return "You open up the BAGGY and sniff it. It's stinky."
-            } else {
-                return "What \(item)? You don't have a \(item)."
+            
+            return justUse(it: item)
+        case "key":
+            if player.here.objects["SHACK"] != nil  && !ShotgunShack.isAllowedIn() {
+                ShotgunShack.allowedIn = true
+                area.add(newNode: frontroom, to: porchOfAShotgunshack, at: .Down)
+                area.add(newNode: bedroom, to: frontroom, at: .Left)
+                area.add(newNode: makeshiftBedroom, to: frontroom, at: .Down)
+                area.add(newNode: kitchen, to: makeshiftBedroom, at: .Down)
+                area.add(newNode: bathroom, to: kitchen, at: .Left)
+                area.add(newNode: laundryRoom, to: kitchen, at: .Right)
+                area.add(newNode: basement, to: kitchen, at: .Down)
+                area.add(newNode: secondBasement, to: basement, at: .Down)
+                return "You unlock the LOCK on the door. You can now go DOWN into the SHACK."
             }
+            
+            return justUse(it: item)
         default:
-            return "You can't do that!"
+            return justUse(it: item)
         }
     }
     
