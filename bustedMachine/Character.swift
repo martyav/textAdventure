@@ -74,4 +74,51 @@ class Player: Character {
         player.here.objects[object.name] = object
         player.pockets.removeValue(forKey: object.name)
     }
+    
+    func changeName() {
+        print("Your name is currently \(player.name). What would you like to change your name to?")
+        print(">")
+        let response = readLine()
+        player.name = response?.capitalized ?? player.name
+    }
+    
+    func changePronouns() {
+        print("Your pronouns are currently \(player.pronouns.joined(separator: "/")). What would you like to change your pronouns to?")
+        print(">")
+        let response = readLine()
+        player.pronouns = response?.components(separatedBy: "/") ?? player.pronouns
+    }
+    
+    func travel(direction: String) -> Node? {
+        guard let moveHere = Direction(rawValue: direction) else {
+            return nil
+        }
+        
+        switch moveHere {
+        case .Left:
+            guard let left = player.here.pathsOut.left else {
+                return nil
+            }
+            
+            return left
+        case .Down:
+            guard let down = player.here.pathsOut.down else {
+                return nil
+            }
+            
+            return down
+        case .Right:
+            guard let right = player.here.pathsOut.right else {
+                return nil
+            }
+            
+            return right
+        case .Up:
+            guard let up = player.here.pathsOut.up else {
+                return nil
+            }
+            
+            return up
+        }
+    }
 }

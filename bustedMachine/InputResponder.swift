@@ -167,9 +167,18 @@ class InputResponder {
         
         if let found = area.allNames[name] {
             let placeholder = "deadend"
-            let spaces = String(repeating: " ", count: found.pathsOut.left?.location.characters.count ?? placeholder.characters.count)
             
-            return "You check for exits:\n\n\(spaces)UP: \(found.pathsOut.up?.location ?? placeholder)\nLEFT: \(found.pathsOut.left?.location ?? placeholder) + RIGHT: \(found.pathsOut.right?.location ?? placeholder)\n\(spaces)DOWN: \(found.pathsOut.down?.location ?? placeholder)"
+            // centering text
+            
+            let middleRowCount = ("(found.pathsOut.left?.location ?? placeholder) + RIGHT: \(found.pathsOut.right?.location ?? placeholder)".characters.count)/2
+            let topRowCount = "UP: \(found.pathsOut.up?.location ?? placeholder)".characters.count
+            let bottomRowCount = "DOWN: \(found.pathsOut.down?.location ?? placeholder)".characters.count
+            let topPosition = (middleRowCount/2)  - (topRowCount/2)
+            let bottomPosition = (middleRowCount/2) - (bottomRowCount/2)
+            let topSpaces = String(repeating: " ", count: topPosition)
+            let bottomSpaces = String(repeating: " ", count: bottomPosition)
+            
+            return "You check for exits:\n\n\(topSpaces)UP: \(found.pathsOut.up?.location ?? placeholder)\nLEFT: \(found.pathsOut.left?.location ?? placeholder) + RIGHT: \(found.pathsOut.right?.location ?? placeholder)\n\(bottomSpaces)DOWN: \(found.pathsOut.down?.location ?? placeholder)"
         } else {
             return "We can't find \(name) on the map."
         }
@@ -177,16 +186,10 @@ class InputResponder {
     
     func change(_ input: String) -> String {
         if input == "name" {
-            print("Your name is currently \(player.name). What would you like to change your name to?")
-            print(">")
-            let response = readLine()
-            player.name = response?.capitalized ?? player.name
+            player.changeName()
             return "Your name is now \(player.name)."
         } else if input == "pronouns" {
-            print("Your pronouns are currently \(player.pronouns.joined(separator: "/")). What would you like to change your pronouns to?")
-            print(">")
-            let response = readLine()
-            player.pronouns = response?.components(separatedBy: "/") ?? player.pronouns
+            player.changePronouns()
             return "Your pronouns are now \(player.pronouns.joined(separator: "/"))."
         } else if input == "kind" {
             return "You can go from being something else to being a Monster, but it's a one-way trip."
@@ -230,32 +233,9 @@ class InputResponder {
             return travel("down")
         }
         
-        switch direction {
-        case "left":
-            guard let left = player.here.pathsOut.left else {
-                return error
-            }
-            
-            player.here = left
-        case "down":
-            guard let down = player.here.pathsOut.down else {
-                return error
-            }
-            
-            player.here = down
-        case "right":
-            guard let right = player.here.pathsOut.right else {
-                return error
-            }
-            
-            player.here = right
-        case "up":
-            guard let up = player.here.pathsOut.up else {
-                return error
-            }
-            
-            player.here = up
-        default:
+        if let moved = player.travel(direction: direction) {
+            player.here = moved
+        } else {
             return error
         }
         
