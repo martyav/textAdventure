@@ -64,14 +64,6 @@ class InputResponder {
         previousCommand = input
     }
     
-    func caseDown(_ text: String) -> String {
-        return text.lowercased()
-    }
-    
-    func breakUp(_ text: String) -> [String] {
-        return text.components(separatedBy: " ")
-    }
-    
     func greeting() {
         print("Welcome, \(player.name)!\n")
         print("You are a \(player.kind). \n")
@@ -86,34 +78,34 @@ class InputResponder {
             return "Type something!"
         }
         
-        let input = caseDown(text)
-        let inspectInput = breakUp(input)
-        let firstWord = inspectInput[0]
-        let lastWord = inspectInput[inspectInput.count - 1]
+        let input = text.lowercased()
+        let individualWords = input.components(separatedBy: " ")
+        let firstWord = individualWords[0]
+        let lastWord = individualWords[individualWords.count - 1]
         
         guard keywords.contains(firstWord) || ambleVerbs.contains(firstWord) else {
             return "Huh?"
         }
         
         switch input {
-        case _ where inspectInput.count > 2 && (firstWord + " " + inspectInput[1]) == "what's my":
+        case _ where individualWords.count > 2 && (firstWord + " " + individualWords[1]) == "what's my":
             return whatsMy(lastWord)
-        case _ where inspectInput.count > 2 && (firstWord + " " + inspectInput[1]) == "what is my":
+        case _ where individualWords.count > 2 && (firstWord + " " + individualWords[1]) == "what is my":
             return whatsMy(lastWord)
-        case _ where inspectInput.count > 1 && ambleVerbs.contains(firstWord):
+        case _ where individualWords.count > 1 && ambleVerbs.contains(firstWord):
             return travel(lastWord)
-        case _ where inspectInput.count > 1 && firstWord == "say":
-            let slice = ArraySlice<String>(inspectInput[1..<inspectInput.count])
+        case _ where individualWords.count > 1 && firstWord == "say":
+            let slice = ArraySlice<String>(individualWords[1..<individualWords.count])
             return say(slice.joined(separator: " "))
-        case _ where inspectInput.count > 1 && firstWord == "take":
+        case _ where individualWords.count > 1 && firstWord == "take":
             return take(lastWord)
-        case _ where inspectInput.count > 1 && firstWord == "drop":
+        case _ where individualWords.count > 1 && firstWord == "drop":
             return drop(lastWord)
-        case _ where inspectInput.count > 1 && firstWord == "change":
+        case _ where individualWords.count > 1 && firstWord == "change":
             return change(lastWord)
-        case _ where inspectInput.count > 1 && firstWord == "use":
+        case _ where individualWords.count > 1 && firstWord == "use":
             return use(lastWord)
-        case _ where inspectInput.count > 1 && firstWord == "look":
+        case _ where individualWords.count > 1 && firstWord == "look":
             return look(at: lastWord)
         case "where am i", "where am i?", "where are we?", "where are we":
             return player.here.description
@@ -135,17 +127,17 @@ class InputResponder {
             print("Bye, \(player.name)!")
             exit(0)
         default:
-            return "??"
+            return "What?"
         }
         
         return "?"
     }
     
     func say(_ input: String) -> String {
-        if !player.here.npcs.isEmpty {
-            print("You say, \"\(input)\".")
-            return "You sense a presence..."
-        }
+       // if !player.here.npcs.isEmpty {
+       //     print("You say, \"\(input)\".")
+            //return "You sense a presence..."
+       // }
         
         return "You say, \"\(input)\"."
     }
@@ -157,9 +149,9 @@ class InputResponder {
     func repeatLast() -> String {
         if previousCommand != "" {
             return respond(to: previousCommand)
-        } else {
-            return "There's nothing to repeat."
         }
+        
+        return "There's nothing to repeat."
     }
     
     func exits() -> String {
@@ -179,23 +171,25 @@ class InputResponder {
             let bottomSpaces = String(repeating: " ", count: bottomPosition)
             
             return "You check for exits:\n\n\(topSpaces)UP: \(found.pathsOut.up?.location ?? placeholder)\nLEFT: \(found.pathsOut.left?.location ?? placeholder) + RIGHT: \(found.pathsOut.right?.location ?? placeholder)\n\(bottomSpaces)DOWN: \(found.pathsOut.down?.location ?? placeholder)"
-        } else {
-            return "We can't find \(name) on the map."
         }
+        
+        return "We can't find \(name) on the map."
     }
     
     func change(_ input: String) -> String {
-        if input == "name" {
+        switch input {
+        case "name":
             player.changeName()
             return "Your name is now \(player.name)."
-        } else if input == "pronouns" {
+        case "pronouns":
             player.changePronouns()
             return "Your pronouns are now \(player.pronouns.joined(separator: "/"))."
-        } else if input == "kind" {
+        case "kind":
             return "You can go from being something else to being a Monster, but it's a one-way trip."
-        } else {
+        default:
             return "Some things can't be changed. Like that, for instance."
         }
+        
     }
     
     func pockets() -> String {
@@ -244,25 +238,23 @@ class InputResponder {
     
     func take(_ object: String) -> String {
         if !player.here.objects.isEmpty {
-            if let hasObject = player.here.objects[object.uppercased()] {
-                guard let item = hasObject as? Item else { return "You can't take that!" }
+            guard let hasObject = player.here.objects[object.uppercased()] else { return "Take what?" }
+            
+            guard let item = hasObject as? Item else { return "You can't fit that in a fanny pack!" }
+            
+            if !item.isPocketable() { return "You can't take that!" } else {
+                player.take(item)
                 
-                if item.isPocketable() {
-                    player.take(item)
-                    
-                    guard player.pockets[item.name] != nil else { return "Your fanny pack is full! You have to DROP something."}
-                    
-                    if object.characters.last == "s" && object != "grass" {
-                        return "You take the \(object) and put them in your fanny pack."
-                    } else {
-                        return "You take the \(object) and put it in your fanny pack."
-                    }
+                guard player.pockets[item.name] != nil else { return "Your fanny pack is full! You have to DROP something."}
+                
+                if object.characters.last == "s" && object != "grass" {
+                    return "You take the \(object) and put them in your fanny pack."
                 } else {
-                    return "You can't take that!"
+                    return "You take the \(object) and put it in your fanny pack."
                 }
             }
-            return "Take what?"
         }
+        
         return "There's nothing to take here."
     }
     
@@ -270,9 +262,9 @@ class InputResponder {
         if let hasObject = player.pockets[object.uppercased()] {
             player.drop(hasObject)
             return "You drop the \(object) on the ground. If you want it back, you'll have to remember to come back here and TAKE it."
-        } else {
-            return "How can you drop something you don't even have?"
         }
+        
+        return "How can you drop something you don't even have?"
     }
     
     func look(at thing: String) -> String {
@@ -336,7 +328,7 @@ class InputResponder {
     }
     
     func use(_ item: String) -> String {
-        let error = "What \(item)?."
+        let error = "Use what for what now?"
         
         func justUse(it item: String) -> String {
             if let heldItem = player.pockets[item.uppercased()] {
@@ -353,17 +345,22 @@ class InputResponder {
                 if foundItem.name == "LOGS" {
                     if let encounter = player.here.npcs[Werewolf.name] {
                         print(foundItem.simpleUse)
+                        if player.here.description != "You are standing in a mucky forest. Bare black TREES grow in loose arrangements. A werewolf named \(encounter.name) is sitting on some LOGS." {
                         player.here.description = "You are standing in a mucky forest. Bare black TREES grow in loose arrangements. A werewolf named \(encounter.name) is sitting on some LOGS."
+                        
                         return "\(encounter.name) emerges from the trees. \(encounter.pronouns[0].capitalized) sits down and says, 'Hi'."
+                        } else {
+                            return "\(encounter.name) smiles shyly and says, \"I'm hungry\"."
+                        }
                     } else {
                         return foundItem.simpleUse
                     }
                 }
                 
                 return foundItem.simpleUse
-            } else {
-                return error
             }
+            
+            return error
         }
         
         switch item {
@@ -372,15 +369,15 @@ class InputResponder {
                 print("\(Werewolf.name) asks if \(Werewolf.pronouns[0]) can have a Scooby Snack.")
                 print(">")
                 let response = readLine()!
-                print(respond(to: response))
                 let yesOrNo = response.components(separatedBy: " ").last
                 if yesOrNo == "yes" || yesOrNo == "yeah" || yesOrNo == "yep" || yesOrNo == "sure" || yesOrNo == "certainly" {
                     print("The werewolf puts the Scooby Snack in \(Werewolf.pronouns[2]) pipe and smokes it. \(Werewolf.pronouns[0]) is so delighted that \(Werewolf.pronouns[0]) gives you \(Werewolf.pronouns[2]) LIGHTER to keep.")
+                    player.here.objects[Lighter.name] = Lighter
                     return respond(to: "take lighter")
                 } else if yesOrNo == "no" || yesOrNo == "nope" || yesOrNo == "nah" || yesOrNo == "away" || yesOrNo == "off" {
                     return "\(Werewolf.name) seems dejected."
                 } else {
-                  return "\(Werewolf.name) tilts \(Werewolf.pronouns[2]) head curiously and says, \"Mrr?\"."
+                    return "\(Werewolf.name) tilts \(Werewolf.pronouns[2]) head curiously and says, \"Mrr?\"."
                 }
             }
             
@@ -472,6 +469,7 @@ class InputResponder {
     }
     
     func existentialism() -> String {
+        
         return "Your name is \(player.name) and you are a \(player.kind).\n\n\(player.appearance)"
     }
 }
