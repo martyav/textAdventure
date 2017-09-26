@@ -298,14 +298,17 @@ class Area1: BasicInstructions {
             guard player.pockets[item.name] != nil else { return "Your fanny pack is full! You have to DROP something."}
                 
             if object.characters.last == "s" {
-                guard object != "grass" else {
+                guard object == "grass" else {
                     return "You take the \(object) and put them in your fanny pack."
                 }
                     
                 return "You take the \(object) and put it in your fanny pack."
             }
+        } else {
+            return "There's nothing to take here."
         }
-        return "There's nothing to take here."
+        
+        return "????????????"
     }
     
     override func use(_ item: String) -> String {

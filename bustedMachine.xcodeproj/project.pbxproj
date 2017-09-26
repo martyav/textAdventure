@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		053F73DB1F79F2EE009E6F4A /* InstructionManual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F73DA1F79F2EE009E6F4A /* InstructionManual.swift */; };
+		053F73DD1F7ABDCD009E6F4A /* Pronoun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F73DC1F7ABDCD009E6F4A /* Pronoun.swift */; };
 		05F833561F6CE51900F117AC /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F833551F6CE51900F117AC /* main.swift */; };
 		05F8335D1F6CE55100F117AC /* Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F8335C1F6CE55100F117AC /* Kind.swift */; };
 		05F8335F1F6CE5FE00F117AC /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F8335E1F6CE5FE00F117AC /* Character.swift */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		053F73DA1F79F2EE009E6F4A /* InstructionManual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionManual.swift; sourceTree = "<group>"; };
+		053F73DC1F7ABDCD009E6F4A /* Pronoun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pronoun.swift; sourceTree = "<group>"; };
 		05F833521F6CE51900F117AC /* bustedMachine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = bustedMachine; sourceTree = BUILT_PRODUCTS_DIR; };
 		05F833551F6CE51900F117AC /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		05F8335C1F6CE55100F117AC /* Kind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Kind.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				05F8336A1F6D972200F117AC /* Item.swift */,
 				05F8336C1F6DA86700F117AC /* EncounterableObjects.swift */,
 				05F833721F6F1DAD00F117AC /* CastOfCharacters.swift */,
+				053F73DC1F7ABDCD009E6F4A /* Pronoun.swift */,
 				05F833661F6CF0F400F117AC /* GameMap.swift */,
 				05F833681F6CF12600F117AC /* Graph.swift */,
 			);
@@ -125,12 +128,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Marty's ";
 				TargetAttributes = {
 					05F833511F6CE51900F117AC = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = GD7JHZ9557;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -166,6 +170,7 @@
 				05F8335D1F6CE55100F117AC /* Kind.swift in Sources */,
 				05F8336F1F6DE82D00F117AC /* InputResponder.swift in Sources */,
 				05F833651F6CEAE800F117AC /* Node.swift in Sources */,
+				053F73DD1F7ABDCD009E6F4A /* Pronoun.swift in Sources */,
 				053F73DB1F79F2EE009E6F4A /* InstructionManual.swift in Sources */,
 				05F833671F6CF0F400F117AC /* GameMap.swift in Sources */,
 				05F833631F6CEAC300F117AC /* Path.swift in Sources */,
@@ -186,7 +191,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -194,7 +201,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -235,7 +246,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -243,7 +256,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -263,6 +280,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
@@ -271,7 +289,8 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = GD7JHZ9557;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -280,7 +299,8 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = GD7JHZ9557;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

@@ -46,13 +46,12 @@ class InputResponder {
         
         switch player.here {
         case weedyField:
-            // some check to see if we are already using the correct manual
-            instructionManual = area1
+            if instructionManual is Area1 == false {
+                instructionManual = area1
+            }
         default:
             print("")
         }
-        
-        print(instructionManual)
     }
     
     func respond(to text: String) -> String {
