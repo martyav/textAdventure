@@ -31,9 +31,9 @@ let laundryRoom = Node(location: "Laundry Room", description: "You find yourself
 let basement = Node(location: "Basement", description: "You find yourself inside a shotgun shack. Down a creaky set of stairs is a musty room made up of beige TILES. Wood paneling is glued halfway up the walls. There is a POSTER of movie about an astronaut.", objects: [Tiles.name: Tiles, Poster.name: Poster])
 let secondBasement = Node(location: "Second Basement", description: "You find yourself inside a shotgun shack. Down another set of creaky stairs is the second basement. It is as big as the house is long. The floor is spread with shag carpeting. Colorful GRAFFITI and stickers cover the beige TILES." , objects: [Tiles.name: Tiles, Graffiti.name: Graffiti])
 
-let map = Graph(startingPoint: weedyField)
-
-func generateGameWorld() {
+func generateSmoke() -> Graph {
+    let map = Graph(startingPoint: weedyField)
+    
     map.add(newNode: nearHighway, to: weedyField, at: .Left)
     map.add(newNode: farHighway, to: nearHighway, at: .Up)
     map.add(newNode: fartherHighway, to: farHighway, at: .Up)
@@ -62,4 +62,6 @@ func generateGameWorld() {
     // map.add(newNode: laundryRoom, to: kitchen, at: .Right)
     // map.add(newNode: basement, to: kitchen, at: .Down)
     // map.add(newNode: secondBasement, to: basement, at: .Down)
+    
+    return map
 }

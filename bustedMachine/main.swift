@@ -8,7 +8,7 @@
 
 import Foundation
 
-generateGameWorld()
+let map = generateSmoke()
 
 print("Hello. What is your name?")
 print(">")
@@ -36,15 +36,22 @@ if let response = Int(pronouns) {
 player.name = name
 player.pronouns = pronouns.components(separatedBy: "/")
 
-let responder = InputResponder(player: player, area: map)
+let defaults = basicInstructions(player: player, area: map)
+let responder = InputResponder(instructionManual: defaults)
 
 print("")
-responder.greeting()
+
+print("Welcome, \(player.name)!\n")
+print("You are a \(player.kind). \n")
+print(player.appearance + "\n")
+print(player.here.description + "\n")
+print(responder.respond(to: "pockets") + "\n")
+print("Type HELP (or help) to see a list of commands at any time.")
 
 while true {
     print(">")
     if let input = readLine() {
         print(responder.respond(to: input) + "\n")
-        responder.previousCommand = input
+        responder.stashLastCommand(input)
     }
 }

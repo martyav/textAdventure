@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		053F73DB1F79F2EE009E6F4A /* InstructionManual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F73DA1F79F2EE009E6F4A /* InstructionManual.swift */; };
 		05F833561F6CE51900F117AC /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F833551F6CE51900F117AC /* main.swift */; };
 		05F8335D1F6CE55100F117AC /* Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F8335C1F6CE55100F117AC /* Kind.swift */; };
 		05F8335F1F6CE5FE00F117AC /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F8335E1F6CE5FE00F117AC /* Character.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		053F73DA1F79F2EE009E6F4A /* InstructionManual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionManual.swift; sourceTree = "<group>"; };
 		05F833521F6CE51900F117AC /* bustedMachine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = bustedMachine; sourceTree = BUILT_PRODUCTS_DIR; };
 		05F833551F6CE51900F117AC /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		05F8335C1F6CE55100F117AC /* Kind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Kind.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 			children = (
 				05F833551F6CE51900F117AC /* main.swift */,
 				05F8336E1F6DE82D00F117AC /* InputResponder.swift */,
+				053F73DA1F79F2EE009E6F4A /* InstructionManual.swift */,
 				05F8335C1F6CE55100F117AC /* Kind.swift */,
 				05F833621F6CEAC300F117AC /* Path.swift */,
 				05F833641F6CEAE800F117AC /* Node.swift */,
@@ -163,6 +166,7 @@
 				05F8335D1F6CE55100F117AC /* Kind.swift in Sources */,
 				05F8336F1F6DE82D00F117AC /* InputResponder.swift in Sources */,
 				05F833651F6CEAE800F117AC /* Node.swift in Sources */,
+				053F73DB1F79F2EE009E6F4A /* InstructionManual.swift in Sources */,
 				05F833671F6CF0F400F117AC /* GameMap.swift in Sources */,
 				05F833631F6CEAC300F117AC /* Path.swift in Sources */,
 				05F833611F6CEA8600F117AC /* Direction.swift in Sources */,
@@ -299,6 +303,7 @@
 				05F8335B1F6CE51900F117AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
