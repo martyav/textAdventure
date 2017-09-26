@@ -9,6 +9,9 @@
 import Foundation
 
 protocol InstructionManual {
+    var keywords: [String] { get }
+    var synonymsForTravel: [String] { get }
+    
     func whatsMy(_ word: String) -> String
     func look(at thing: String) -> String
     func travel(_ direction: String) -> String
@@ -23,7 +26,7 @@ protocol InstructionManual {
     func existentialism() -> String
 }
 
-class basicInstructions: InstructionManual {
+class BasicInstructions: InstructionManual {
     let player: Player
     var area: Graph
     
@@ -31,6 +34,47 @@ class basicInstructions: InstructionManual {
         self.player = player
         self.area = area
     }
+    
+    let keywords = [
+        "repeat"
+        ,"take"
+        , "drop"
+        , "look"
+        , "help"
+        , "exits"
+        , "exist"
+        , "pockets"
+        , "use"
+        , "what's"
+        , "what"
+        , "where"
+        , "who"
+        , "change"
+        , "say"
+        , "left"
+        , "down"
+        , "right"
+        , "up"
+        , "quit"
+    ]
+    
+    let synonymsForTravel = [
+        "go"
+        , "head"
+        , "walk"
+        , "run"
+        , "skip"
+        , "jump"
+        , "dance"
+        , "amble"
+        , "climb"
+        , "jog"
+        , "hop"
+        , "sneak"
+        , "strafe"
+        , "travel"
+        , "stomp"
+    ]
     
     func say(_ input: String) -> String {
         return "You say, \"\(input)\"."
@@ -216,18 +260,161 @@ class basicInstructions: InstructionManual {
     func use(_ item: String) -> String {
         let error = "Use what for what now?"
         
-        func justUse(it item: String) -> String {
-            if let heldItem = player.pockets[item.uppercased()] {
-                return heldItem.simpleUse
-            } else {
-                return error
-            }
+        if let heldItem = player.pockets[item.uppercased()] {
+            return heldItem.simpleUse
+        } else {
+            return error
         }
-        
-        return justUse(it: item)
     }
     
     func whatsMy(_ query: String) -> String {
+        switch query {
+        case "name":
+            return "Your name is \(player.name)."
+        case "location":
+            return "You are here: \(player.here.location)"
+        default:
+            return "That's a weird question."
+        }
+    }
+    
+    func existentialism() -> String {
+        
+        return "Your name is \(player.name) and you are a \(player.kind).\n\n\(player.appearance)"
+    }
+}
+
+class Area1: BasicInstructions {
+    override func take(_ object: String) -> String {
+        if !player.here.objects.isEmpty {
+            guard let hasObject = player.here.objects[object.uppercased()] else { return "Take what?" }
+            
+            guard let item = hasObject as? Item else { return "You can't fit that in a fanny pack!" }
+            
+            guard item.isPocketable() else { return "You can't take that!" }
+            
+            player.take(item)
+                
+            guard player.pockets[item.name] != nil else { return "Your fanny pack is full! You have to DROP something."}
+                
+            if object.characters.last == "s" {
+                guard object != "grass" else {
+                    return "You take the \(object) and put them in your fanny pack."
+                }
+                    
+                return "You take the \(object) and put it in your fanny pack."
+            }
+        }
+        return "There's nothing to take here."
+    }
+    
+    override func use(_ item: String) -> String {
+        let error = "Use what for what now?"
+        
+        func justUse(it item: String) -> String {
+            if let heldItem = player.pockets[item.uppercased()] {
+                return heldItem.simpleUse
+            }
+            
+            if let foundItem = player.here.objects[item.uppercased()] as? Item {
+                if foundItem.name == "HOLE" {
+                    // if the player tries to use the hole they die
+                    print(foundItem.simpleUse)
+                    print("Bye, \(player.name)!")
+                    exit(0)
+                }
+                
+                if foundItem.name == "LOGS" {
+                    if let encounter = player.here.npcs[Werewolf.name] {
+                        print(foundItem.simpleUse)
+                        if player.here.description != "You are standing in a mucky forest. Bare black TREES grow in loose arrangements. A werewolf named \(encounter.name) is sitting on some LOGS." {
+                            player.here.description = "You are standing in a mucky forest. Bare black TREES grow in loose arrangements. A werewolf named \(encounter.name) is sitting on some LOGS."
+                            
+                            return "\(encounter.name) emerges from the trees. \(encounter.pronouns[0].capitalized) sits down and says, 'Hi'."
+                        } else {
+                            return "\(encounter.name) smiles shyly and says, \"I'm hungry\"."
+                        }
+                    } else {
+                        return foundItem.simpleUse
+                    }
+                }
+                
+                return foundItem.simpleUse
+            }
+            
+            return error
+        }
+        
+        switch item {
+        case "box", "treats", "dogtreats", "snacks", "scoobysnacks":
+            if player.here == werewolfPark && werewolfPark.description == "You are standing in a mucky forest. Bare black TREES grow in loose arrangements. A werewolf named \(Werewolf.name) is sitting on some LOGS." {
+                print("\(Werewolf.name) asks if \(Werewolf.pronouns[0]) can have a Scooby Snack.")
+                print(">")
+                let response = readLine()!
+                let yesOrNo = response.components(separatedBy: " ").last
+                if yesOrNo == "yes" || yesOrNo == "yeah" || yesOrNo == "yep" || yesOrNo == "sure" || yesOrNo == "certainly" {
+                    print("The werewolf puts the Scooby Snack in \(Werewolf.pronouns[2]) pipe and smokes it. \(Werewolf.pronouns[0]) is so delighted that \(Werewolf.pronouns[0]) gives you \(Werewolf.pronouns[2]) LIGHTER to keep.")
+                    player.here.objects[Lighter.name] = Lighter
+                    return take("lighter")
+                } else if yesOrNo == "no" || yesOrNo == "nope" || yesOrNo == "nah" || yesOrNo == "away" || yesOrNo == "off" {
+                    return "\(Werewolf.name) seems dejected."
+                } else {
+                    return "\(Werewolf.name) tilts \(Werewolf.pronouns[2]) head curiously and says, \"Mrr?\"."
+                }
+            }
+            
+            return justUse(it: item)
+        case "pipe":
+            if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
+                return "You put the stuff inside the BAGGY in your PIPE and light it with your LIGHTER."
+            } else if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil {
+                return "You hold the LIGHTER up to the PIPE. It gets hot, but the PIPE is still empty."
+            } else if player.pockets["PIPE"] != nil && player.pockets["BAGGY"] != nil {
+                return "You take some of the stuff inside the BAGGY and put it in your PIPE. But you have no way to light it."
+            }
+            
+            return justUse(it: item)
+        case "lighter":
+            if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
+                return "You put the stuff inside the BAGGY in your PIPE and light it with your LIGHTER."
+            } else if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil {
+                return "You hold the LIGHTER up to the PIPE. It gets hot, but the PIPE is still empty."
+            } else if player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
+                return "You try to use the LIGHTER on the contents of the BAGGY. The contents light on fire a little, and the smoke drifts away..."
+            }
+            
+            return justUse(it: item)
+        case "baggy", "baggie", "bag":
+            if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
+                return "You put the stuff inside the BAGGY in your PIPE and smoke it."
+            } else if player.pockets["PIPE"] != nil && player.pockets["BAGGY"] != nil {
+                return "You try to use the LIGHTER on the contents of the BAGGY. The contents light on fire a little, and the smoke drifts away..."
+            } else if player.pockets["PIPE"] != nil && player.pockets["BAGGY"] != nil {
+                return "You put the stuff inside the BAGGY in your PIPE. But you have no way to light it."
+            }
+            
+            return justUse(it: item)
+        case "key":
+            if player.here.objects["SHACK"] != nil  && !ShotgunShack.isAllowedIn() {
+                ShotgunShack.allowedIn = true
+                area.add(newNode: frontroom, to: porchOfAShotgunshack, at: .Down)
+                area.add(newNode: bedroom, to: frontroom, at: .Left)
+                area.add(newNode: makeshiftBedroom, to: frontroom, at: .Down)
+                area.add(newNode: kitchen, to: makeshiftBedroom, at: .Down)
+                area.add(newNode: bathroom, to: kitchen, at: .Left)
+                area.add(newNode: laundryRoom, to: kitchen, at: .Right)
+                area.add(newNode: basement, to: kitchen, at: .Down)
+                area.add(newNode: secondBasement, to: basement, at: .Down)
+                return "You unlock the LOCK on the door. You can now go DOWN into the SHACK."
+            }
+            
+            return justUse(it: item)
+        default:
+            return justUse(it: item)
+        }
+    }
+    
+    override func whatsMy(_ query: String) -> String {
         switch query {
             
         case "name":
@@ -262,9 +449,6 @@ class basicInstructions: InstructionManual {
             return "That's a weird question."
         }
     }
-    
-    func existentialism() -> String {
-        
-        return "Your name is \(player.name) and you are a \(player.kind).\n\n\(player.appearance)"
-    }
 }
+
+class Area2: BasicInstructions {}

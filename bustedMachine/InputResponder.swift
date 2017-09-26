@@ -9,53 +9,19 @@
 import Foundation
 
 class InputResponder {
-    let keywords = [
-        "repeat"
-        ,"take"
-        , "drop"
-        , "look"
-        , "help"
-        , "exits"
-        , "exist"
-        , "pockets"
-        , "use"
-        , "what's"
-        , "what"
-        , "where"
-        , "who"
-        , "change"
-        , "say"
-        , "left"
-        , "down"
-        , "right"
-        , "up"
-        , "quit"
-    ]
-    
-    let ambleVerbs = [
-        "go"
-        , "head"
-        , "walk"
-        , "run"
-        , "skip"
-        , "jump"
-        , "dance"
-        , "amble"
-        , "climb"
-        , "jog"
-        , "hop"
-        , "sneak"
-        , "strafe"
-        , "travel"
-        , "stomp"
-    ]
-    
+    var player: Player
+    var area: Graph
     var previousCommand: String
     var instructionManual: InstructionManual
     
-    init(instructionManual: InstructionManual, previousCommand: String = "") {
-        self.instructionManual = instructionManual
+    init(player: Player, area: Graph, previousCommand: String = "") {
+        self.player = player
+        self.area = area
         self.previousCommand = previousCommand
+        
+        let defaults = BasicInstructions(player: self.player, area: self.area)
+        
+        self.instructionManual = defaults
     }
     
     func stashLastCommand(_ input: String) {
@@ -70,6 +36,25 @@ class InputResponder {
         return "There's nothing to repeat."
     }
     
+    func quit() {
+        print("Bye, \(player.name)!")
+        exit(0)
+    }
+    
+    func rtfm() {
+        let area1 = Area1(player: player, area: map)
+        
+        switch player.here {
+        case weedyField:
+            // some check to see if we are already using the correct manual
+            instructionManual = area1
+        default:
+            print("")
+        }
+        
+        print(instructionManual)
+    }
+    
     func respond(to text: String) -> String {
         guard !text.isEmpty else {
             return "Type something!"
@@ -80,7 +65,7 @@ class InputResponder {
         let firstWord = individualWords[0]
         let lastWord = individualWords[individualWords.count - 1]
         
-        guard keywords.contains(firstWord) || ambleVerbs.contains(firstWord) else {
+        guard instructionManual.keywords.contains(firstWord) else {
             return "Huh?"
         }
         
@@ -89,7 +74,7 @@ class InputResponder {
             return instructionManual.whatsMy(lastWord)
         case _ where individualWords.count > 2 && (firstWord + " " + individualWords[1]) == "what is my":
             return instructionManual.whatsMy(lastWord)
-        case _ where individualWords.count > 1 && ambleVerbs.contains(firstWord):
+        case _ where individualWords.count > 1 && instructionManual.synonymsForTravel.contains(firstWord):
             return instructionManual.travel(lastWord)
         case _ where individualWords.count > 1 && firstWord == "say":
             let slice = ArraySlice<String>(individualWords[1..<individualWords.count])
@@ -121,8 +106,7 @@ class InputResponder {
         case "look":
             return instructionManual.look(at: player.here.location)
         case "quit":
-            print("Bye, \(player.name)!")
-            exit(0)
+            quit()
         default:
             return "What?"
         }
@@ -130,4 +114,3 @@ class InputResponder {
         return "?"
     }
 }
-

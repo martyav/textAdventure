@@ -36,8 +36,7 @@ if let response = Int(pronouns) {
 player.name = name
 player.pronouns = pronouns.components(separatedBy: "/")
 
-let defaults = basicInstructions(player: player, area: map)
-let responder = InputResponder(instructionManual: defaults)
+let responder = InputResponder(player: player, area: map)
 
 print("")
 
@@ -49,7 +48,10 @@ print(responder.respond(to: "pockets") + "\n")
 print("Type HELP (or help) to see a list of commands at any time.")
 
 while true {
+    responder.rtfm()
+    
     print(">")
+    
     if let input = readLine() {
         print(responder.respond(to: input) + "\n")
         responder.stashLastCommand(input)
