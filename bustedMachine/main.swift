@@ -23,11 +23,11 @@ var pronouns = readLine()!
 if let response = Int(pronouns) {
     switch response {
     case 1:
-        pronouns = "she/her/hers"
+        pronouns = PronounSet.she
     case 2:
-        pronouns = "he/him/his"
+        pronouns = PronounSet.he
     case 3:
-        pronouns = "they/them/their"
+        pronouns = PronounSet.they
     default:
         break
     }

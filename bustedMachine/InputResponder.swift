@@ -71,7 +71,9 @@ class InputResponder {
         switch input {
         case _ where individualWords.count > 2 && (firstWord + " " + individualWords[1]) == "what's my":
             return instructionManual.whatsMy(lastWord)
-        case _ where individualWords.count > 2 && (firstWord + " " + individualWords[1]) == "what is my":
+        case _ where individualWords.count > 3 && (firstWord + " " + individualWords[1] + " " + individualWords[2]) == "what is my":
+            return instructionManual.whatsMy(lastWord)
+        case _ where individualWords.count > 3 && (firstWord + " " + individualWords[1] + " " + individualWords[2]) == "what are my":
             return instructionManual.whatsMy(lastWord)
         case _ where individualWords.count > 1 && instructionManual.synonymsForTravel.contains(firstWord):
             return instructionManual.travel(lastWord)
@@ -104,6 +106,8 @@ class InputResponder {
             return instructionManual.pockets()
         case "look":
             return instructionManual.look(at: player.here.location)
+        case "change", "take", "use", "say":
+            return "You need to tell me what to \(input)."
         case "quit":
             quit()
         default:

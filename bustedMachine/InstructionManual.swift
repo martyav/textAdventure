@@ -117,7 +117,7 @@ class BasicInstructions: InstructionManual {
         case "kind":
             return "You can go from being something else to being a Monster, but it's a one-way trip."
         default:
-            return "Some things can't be changed. Like that, for instance."
+            return "CHANGE what?"
         }
         
     }
@@ -285,30 +285,83 @@ class BasicInstructions: InstructionManual {
 }
 
 class Area1: BasicInstructions {
+    override func say(_ input: String) -> String {
+        
+        if player.here.npcs[Werewolf.name] != nil && player.here.description == "You are standing in a mucky forest. Bare black TREES grow in loose arrangements. A werewolf named \(Werewolf.name) is sitting on some LOGS." {
+            switch input {
+            case "hi", "hello", "howdy", "hey", "hola":
+                return "You say, \"\(input)\".\n\n\(Werewolf.name) wags \(Werewolf.pronouns[2]) tail."
+            case "who are you", "who're you", "who are you?", "who're you?":
+                return "You say, \"\(input)\".\n\nThe werewolf says, \"What? Don't you recognize me? I'm your pal, \(Werewolf.name). We met down at the shack last weekend. I'm not that great at faces either, but dang it, I'm a blue furry wolf. C'mon.\""
+            case "how are you", "what's up", "sup", "'sup":
+                return "You say, \"\(input)\".\n\n\(Werewolf.name) smiles and says, \"Nothing much. Hey, do you happen to have any Scooby Snacks? I'm all out.\""
+            case "fuck you", "fuck off", "gtfo", "go away":
+                player.here.description = "You are standing in a mucky forest. Bare black TREES grow in loose arrangements. The ground is covered in tall GRASS, CLOVER, and scratchy WEEDS. There are also many recently felled TREES. These LOGS provide dry footing and can be USED as a place to sit."
+                return "You say, \"\(input)\".\n\nThe werewolf growls \"No, you \(input)\" and disappears back into the forest."
+            case "hey hot stuff", "let's make out", "hey pretty", "you're cute", "hey baby", "you're hot", "hey sexy", "hey hottie":
+                return "You say, \"\(input)\".\n\nThe werewolf seems a little put off by your forwardness.\n\nMaybe you shouldn't be sexually harassing werewolves?"
+            case _ where input.components(separatedBy: " ").last == "bitch":
+                fallthrough
+            case "die", "kill yourself", "foad":
+                print("You say, \"\(input)\".\n\nThe werewolf blinks.\n\nThe werewolf lunges at your throat.\n\nThe werewolf spits out foam.\n\nYour fuzzy outer covering is torn to shreds, but you remain fully conscious.\n\nThe werewolf's claws tear through your Kevlar rib lining.\n\nThe werewolf smashes through your PVC ribcage.\n\nThe werewolf rips open the medical-grade plastic sac containing your heart and lungs.\n\nYou can no longer breathe.\n\nYou die.\n\nBye, \(player.name)!")
+                exit(0)
+            case _ where player.pockets[Lighter.name] != nil:
+                switch input {
+                case "thank you", "thanks":
+                    return "You say, \"\(input)\".\n\n\(Werewolf.name) winks at you and makes finger guns. \"No problem,\" \(Werewolf.pronouns[0]) says. \"I haven't had a good Scooby Snack in weeks.\""
+                default:
+                    return "You say \"\(input)\". \(Werewolf.name) is nonplussed."
+                }
+            case _ where player.pockets[ScoobySnacks.name] != nil:
+                switch input {
+                case "yes", "yeah", "yup":
+                    return "You say, \"\(input)\".\n\n\(Werewolf.name)'s ears perk up eagerly. You'll have to USE the box you found to offer \(Werewolf.pronouns[1]) some treats."
+                case "no", "nope", "nah":
+                    return "You say, \"\(input)\".\n\n\(Werewolf.name) frowns. \"That's funny...I thought I smelled something,\" \(Werewolf.pronouns[0]) says."
+                default:
+                    return "You say, \(input).\n\n\(Werewolf.name) is nonplussed."
+                }
+            case _ where player.pockets[ScoobySnacks.name] == nil:
+                switch input {
+                case "yes", "yeah", "yup":
+                    return "You say, \"\(input)\".\n\n\(Werewolf.name)'s ears perk up eagerly. But \(Werewolf.pronouns[0]) doesn't smell any Scooby Snacks on you..."
+                case "no", "nope", "nah":
+                    return "You say, \"\(input)\".\n\n\(Werewolf.name) frowns. \"Sometimes I find unopened boxes of them when I go dumpster diving,\" \(Werewolf.pronouns[0]) says."
+                default:
+                    return "You say \"\(input)\". \(Werewolf.name) is nonplussed."
+                }
+            default:
+                return "You say \"\(input)\". \(Werewolf.name) is nonplussed."
+            }
+        }
+        
+        if player.here.npcs[Werewolf.name] != nil && player.here.description == "You are standing in a mucky forest. Bare black TREES grow in loose arrangements. The ground is covered in tall GRASS, CLOVER, and scratchy WEEDS. There are also many recently felled TREES. These LOGS provide dry footing and can be USED as a place to sit." {
+            return "You say, \"\(input)\".\n\nYou have the feeling that someone can hear you."
+        }
+        
+        return "You say, \"\(input)\"."
+    }
+    
     override func take(_ object: String) -> String {
         if !player.here.objects.isEmpty {
             guard let hasObject = player.here.objects[object.uppercased()] else { return "Take what?" }
             
             guard let item = hasObject as? Item else { return "You can't fit that in a fanny pack!" }
             
-            guard item.isPocketable() else { return "You can't take that!" }
-            
-            player.take(item)
+            if !item.isPocketable() { return "You can't take that!" } else {
+                player.take(item)
                 
-            guard player.pockets[item.name] != nil else { return "Your fanny pack is full! You have to DROP something."}
+                guard player.pockets[item.name] != nil else { return "Your fanny pack is full! You have to DROP something."}
                 
-            if object.characters.last == "s" {
-                guard object == "grass" else {
+                if object.characters.last == "s" && object != "grass" {
                     return "You take the \(object) and put them in your fanny pack."
+                } else {
+                    return "You take the \(object) and put it in your fanny pack."
                 }
-                    
-                return "You take the \(object) and put it in your fanny pack."
             }
-        } else {
-            return "There's nothing to take here."
         }
         
-        return "????????????"
+        return "There's nothing to take here."
     }
     
     override func use(_ item: String) -> String {
@@ -351,12 +404,13 @@ class Area1: BasicInstructions {
         switch item {
         case "box", "treats", "dogtreats", "snacks", "scoobysnacks":
             if player.here == werewolfPark && werewolfPark.description == "You are standing in a mucky forest. Bare black TREES grow in loose arrangements. A werewolf named \(Werewolf.name) is sitting on some LOGS." {
-                print("\(Werewolf.name) asks if \(Werewolf.pronouns[0]) can have a Scooby Snack.")
+                print("\(Werewolf.name) sees you have Scooby Snacks and \(Werewolf.pronouns[2]) ears tilt forward.\n")
+                print("\(Werewolf.name) asks if \(Werewolf.pronouns[0]) can have a Scooby Snack.\n")
                 print(">")
                 let response = readLine()!
                 let yesOrNo = response.components(separatedBy: " ").last
                 if yesOrNo == "yes" || yesOrNo == "yeah" || yesOrNo == "yep" || yesOrNo == "sure" || yesOrNo == "certainly" {
-                    print("The werewolf puts the Scooby Snack in \(Werewolf.pronouns[2]) pipe and smokes it. \(Werewolf.pronouns[0]) is so delighted that \(Werewolf.pronouns[0]) gives you \(Werewolf.pronouns[2]) LIGHTER to keep.")
+                    print("\(Werewolf.name) puts the Scooby Snack in \(Werewolf.pronouns[2]) pipe and smokes it.\n\n\(Werewolf.pronouns[0].capitalized) is so delighted that \(Werewolf.pronouns[0]) gives you \(Werewolf.pronouns[2]) LIGHTER to keep.")
                     player.here.objects[Lighter.name] = Lighter
                     return take("lighter")
                 } else if yesOrNo == "no" || yesOrNo == "nope" || yesOrNo == "nah" || yesOrNo == "away" || yesOrNo == "off" {
@@ -442,6 +496,8 @@ class Area1: BasicInstructions {
             return "You're kind of bored and lonely. It's tough being a monster sometimes. A lot of people think you're creepy just for existing. Others don't take you seriously, based purely on your appearance. Maybe the fanny pack and boxers don't help, but if they're going to think that anyway, why bother fitting in?"
         case "gender":
             return "You're still sorting that out, but you generally go by \(player.pronouns.joined(separator: "/")) pronouns when out in public."
+        case "pronouns":
+            return "Nowadays you go by \(player.pronouns.joined(separator: "/")) pronouns when out in public. Maybe you want a CHANGE?"
         case "location":
             return "You are here: \(player.here.location)"
         case "status":
