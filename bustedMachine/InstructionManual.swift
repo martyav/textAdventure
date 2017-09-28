@@ -339,6 +339,15 @@ class Area1: BasicInstructions {
             return "You say, \"\(input)\".\n\nYou have the feeling that someone can hear you."
         }
         
+        if player.here == secondBasement {
+            switch input {
+            case "hi", "hola", "hey", "hello":
+                return "You say \"\(input)\". \(Cookiepuss.name) grins and says, \"\(input)\" back. \(FutureCreep.name) nods. \(Possum.name) makes a little wave."
+            default:
+               return "You say \"\(input)\". Everyone shrugs."
+            }
+        }
+        
         return "You say, \"\(input)\"."
     }
     

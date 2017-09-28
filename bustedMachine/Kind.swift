@@ -14,3 +14,5 @@ enum Kind {
     // (human-like) halflings, (baboon-like) trolls, and (squirrel-like) elves
     case Hatchasee, Greffle, Tresson
 }
+
+

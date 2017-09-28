@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PronounSet {
+struct PronounSet {
     static let who = "who/whom/whose"
     static let they = "they/them/their"
     static let it = "it/its/its"
@@ -24,6 +24,4 @@ class PronounSet {
         let randomIndex = Int(arc4random_uniform(UInt32(pronouns.count)))
         return pronouns[randomIndex]
     }
-    
-    private init() {}
 }
