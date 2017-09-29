@@ -51,7 +51,7 @@ struct Vehicle: InanimateObject {
     var name: String
     var description: String
     let pocketable: Bool
-    let allowedOn: Bool
+    var allowedOn: Bool
     
     init(name: String, description: String, pocketable: Bool = false, allowedOn: Bool) {
         self.name = name

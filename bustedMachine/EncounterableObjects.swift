@@ -9,7 +9,7 @@
 import Foundation
 
 let Pipe: Item = Item(name: "PIPE", description: "This is a little aluminum PIPE. For tobacco use only?", pocketable: true, simpleUse: "You put the PIPE in your mouth. It's empty. You look kind of silly.")
-let Lighter: Item = Item(name: "LIGHTER", description: "This is a LIGHTER. It has a colorful illustration of a pegasus on it.", pocketable: true, simpleUse: "You flick the LIGHTER on. Ooh, pretty.")
+let Lighter: Item = Item(name: "LIGHTER", description: "This is a LIGHTER. It has a colorful illustration of a pegasus on it.", pocketable: true, simpleUse: "You flick the LIGHTER on. The flame is very small. If you wanted to light something on fire, you're out of luck.")
 let Key: Item = Item(name: "KEY", description: "This is a KEY. It's silvery and has a little dab of red nail polish on it.", pocketable: true, simpleUse: "You try to use the KEY to unlock thin air.")
 let ScoobySnacks: Item = Item(name: "BOX", description: "This is a full BOX of Scooby Snacks. They look tasty.", pocketable: true, simpleUse: "You eat a Scooby Snack from the BOX. Yum!")
 let Baggy: Item = Item(name: "BAGGY", description: "This is a ziplock BAGGY containing tiny bits of plant material...and some dimes?", pocketable: true, simpleUse: "You open up the BAGGY and sniff it. It's stinky.")
@@ -54,6 +54,7 @@ let Bottles: Item = Item(name: "BOTTLES", description: "These are bottles full o
 let Graffiti: Item = Item(name: "GRAFFITI", description: "This is some impressive graffiti.", pocketable: false)
 let Poster: Item = Item(name: "POSTER", description: "This is a poster advertising a sci-fi movie. It's set aboard a space station. People back then had a lot of weird ideas about what living in space would be like.\n\nHm...\n\nYou notice the outline of a secret DOOR...", pocketable: false, contents: [SecretDoor.name: SecretDoor])
 let SecretDoor: Item = Item(name: "DOOR", description: "This is a secret door, carefully painted to look like the rest of the wall. It has a LOCK on it.", pocketable: false, contents: [Lock.name: Lock])
+
 let Truck: Vehicle = Vehicle(name: "TRUCK", description: "This is a big truck. It has no driver. There are bright lights along the sides and across the back and grill. It is drafting behind the truck ahead of it.", allowedOn: false)
 let Lights: Building = Building(name: "LIGHTS", description: "This is a distant cluster of lights. It's a city, but it's far away. Your family lives there.", allowedIn: false)
 var ShotgunShack: Building = Building(name: "SHACK", description: "This is a shotgun shack. The rooms in this building come one after another, back to front. Someone appears to have remodeled it to add extra rooms, though. The door has a LOCK.", allowedIn: false)

@@ -338,6 +338,12 @@ class Area1: BasicInstructions {
     override func use(_ item: String) -> String {
         let error = "Use what for what now?"
         
+        if item == "truck" && player.here.objects[Truck.name] != nil {
+            if !Truck.isAllowedOn() {
+                return "You try to hitch a ride on the truck but it passes you by.\n\nMaybe try that car over there?"
+            }
+        }
+        
         func justUse(it item: String) -> String {
             if let heldItem = player.pockets[item.uppercased()] {
                 return heldItem.simpleUse
@@ -394,7 +400,11 @@ class Area1: BasicInstructions {
             return justUse(it: item)
         case "pipe":
             if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
-                return "You put the stuff inside the BAGGY in your PIPE and light it with your LIGHTER."
+                if player.here.npcs[Cookiepuss.name] != nil {
+                    return "You put the stuff inside the BAGGY in your PIPE and smoke it. You pass the pipe around. You start to feel different.\n\nYou stare at your hands.\n\nThese hands...these fuzzy Monster hands...these used to be Human hands.\n\nYou fiddle with the strap reinforcing the velcro flap on your arm.\n\nYou never asked for this body. Your parents decided, long ago, that you would be fuzzy and red. Sometimes you wish you were blue, or yellow, or green. You could get it done, if you really wanted it.\n\nYou wonder what your face would have looked like if you had the choice. You can change your face. You can have all sorts of faces. But looking more Human is illegal...\n\n\(Cookiepuss.name) passes you the pipe back."
+                }
+                
+                return "You put the stuff inside the BAGGY in your PIPE and smoke it."
             } else if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil {
                 return "You hold the LIGHTER up to the PIPE. It gets hot, but the PIPE is still empty."
             } else if player.pockets["PIPE"] != nil && player.pockets["BAGGY"] != nil {
@@ -404,8 +414,11 @@ class Area1: BasicInstructions {
             return justUse(it: item)
         case "lighter":
             if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
-                return "You put the stuff inside the BAGGY in your PIPE and light it with your LIGHTER."
-            } else if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil {
+                if player.here.npcs[Cookiepuss.name] != nil {
+                    return "You put the stuff inside the BAGGY in your PIPE and smoke it. You pass the pipe around. You start to feel different.\n\nYou stare at your hands.\n\nThese hands...these fuzzy Monster hands...these used to be Human hands.\n\nYou fiddle with the strap reinforcing the velcro flap on your arm.\n\nYou never asked for this body. Your parents decided, long ago, that you would be fuzzy and red. Sometimes you wish you were blue, or yellow, or green. You could get it done, if you really wanted it.\n\nYou wonder what your face would have looked like if you had the choice. You can change your face. You can have all sorts of faces. But looking more Human is illegal...\n\n\(Cookiepuss.name) passes you the pipe back."
+                }
+    
+                return "You put the stuff inside the BAGGY in your PIPE and smoke it."            } else if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil {
                 return "You hold the LIGHTER up to the PIPE. It gets hot, but the PIPE is still empty."
             } else if player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
                 return "You try to use the LIGHTER on the contents of the BAGGY. The contents light on fire a little, and the smoke drifts away..."
@@ -414,6 +427,10 @@ class Area1: BasicInstructions {
             return justUse(it: item)
         case "baggy", "baggie", "bag":
             if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
+                if player.here.npcs[Cookiepuss.name] != nil {
+                    return "You put the stuff inside the BAGGY in your PIPE and smoke it. You pass the pipe around. You start to feel different.\n\nYou stare at your hands.\n\nThese hands...these fuzzy Monster hands...these used to be Human hands.\n\nYou fiddle with the strap reinforcing the velcro flap on your arm.\n\nYou never asked for this body. Your parents decided, long ago, that you would be fuzzy and red. Sometimes you wish you were blue, or yellow, or green. You could get it done, if you really wanted it.\n\nYou wonder what your face would have looked like if you had the choice. You can change your face. You can have all sorts of faces. But looking more Human is illegal...\n\n\(Cookiepuss.name) passes you the pipe back."
+                }
+                
                 return "You put the stuff inside the BAGGY in your PIPE and smoke it."
             } else if player.pockets["PIPE"] != nil && player.pockets["BAGGY"] != nil {
                 return "You try to use the LIGHTER on the contents of the BAGGY. The contents light on fire a little, and the smoke drifts away..."

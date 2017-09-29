@@ -43,9 +43,9 @@ print("")
 print("Welcome, \(player.name)!\n")
 print("You are a \(player.kind). \n")
 print(player.appearance + "\n")
-print(player.here.description + "\n")
+print(responder.respond(to: "help"))
+print("\n" + player.here.description + "\n")
 print(responder.respond(to: "pockets") + "\n")
-print("Type HELP (or help) to see a list of commands at any time.")
 
 while true {
     responder.rtfm()
