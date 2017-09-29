@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		053F73DB1F79F2EE009E6F4A /* InstructionManual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F73DA1F79F2EE009E6F4A /* InstructionManual.swift */; };
 		053F73DD1F7ABDCD009E6F4A /* Pronoun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F73DC1F7ABDCD009E6F4A /* Pronoun.swift */; };
+		053F73DF1F7DA5B1009E6F4A /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F73DE1F7DA5B1009E6F4A /* Conversation.swift */; };
 		05F833561F6CE51900F117AC /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F833551F6CE51900F117AC /* main.swift */; };
 		05F8335D1F6CE55100F117AC /* Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F8335C1F6CE55100F117AC /* Kind.swift */; };
 		05F8335F1F6CE5FE00F117AC /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F8335E1F6CE5FE00F117AC /* Character.swift */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		053F73DA1F79F2EE009E6F4A /* InstructionManual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionManual.swift; sourceTree = "<group>"; };
 		053F73DC1F7ABDCD009E6F4A /* Pronoun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pronoun.swift; sourceTree = "<group>"; };
+		053F73DE1F7DA5B1009E6F4A /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		05F833521F6CE51900F117AC /* bustedMachine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = bustedMachine; sourceTree = BUILT_PRODUCTS_DIR; };
 		05F833551F6CE51900F117AC /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		05F8335C1F6CE55100F117AC /* Kind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Kind.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				05F833551F6CE51900F117AC /* main.swift */,
 				05F8336E1F6DE82D00F117AC /* InputResponder.swift */,
 				053F73DA1F79F2EE009E6F4A /* InstructionManual.swift */,
+				053F73DE1F7DA5B1009E6F4A /* Conversation.swift */,
 				05F8335C1F6CE55100F117AC /* Kind.swift */,
 				05F833621F6CEAC300F117AC /* Path.swift */,
 				05F833641F6CEAE800F117AC /* Node.swift */,
@@ -164,6 +167,7 @@
 				05F8336D1F6DA86700F117AC /* EncounterableObjects.swift in Sources */,
 				05F833731F6F1DAD00F117AC /* CastOfCharacters.swift in Sources */,
 				05F833691F6CF12600F117AC /* Graph.swift in Sources */,
+				053F73DF1F7DA5B1009E6F4A /* Conversation.swift in Sources */,
 				05F8336B1F6D972200F117AC /* Item.swift in Sources */,
 				05F8335F1F6CE5FE00F117AC /* Character.swift in Sources */,
 				05F833561F6CE51900F117AC /* main.swift in Sources */,

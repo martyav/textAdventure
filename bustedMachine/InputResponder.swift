@@ -64,7 +64,7 @@ class InputResponder {
         let firstWord = individualWords[0]
         let lastWord = individualWords[individualWords.count - 1]
         
-        guard instructionManual.keywords.contains(firstWord) else {
+        guard instructionManual.keywords.contains(firstWord) || instructionManual.synonymsForTravel.contains(firstWord) else {
             return "Huh?"
         }
         

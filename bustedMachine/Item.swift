@@ -25,7 +25,7 @@ struct Item: InanimateObject {
     var contents: [String: Item]
     var simpleUse: String
     
-    init(name: String, description: String, pocketable: Bool, replenishable: Bool = false, contents: [String:Item] = [:], simpleUse: String = "") {
+    init(name: String, description: String, pocketable: Bool, replenishable: Bool = false, contents: [String:Item] = [:], simpleUse: String = "You're not sure how to use that.") {
         self.name = name
         self.description = description
         self.pocketable = pocketable
