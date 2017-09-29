@@ -14,12 +14,18 @@ protocol Character {
     var appearance: String { get }
 }
 
-class NonPlayer: Character {
+class NonPlayer: Equatable, Character {
     var name: String
     var pronouns: [String]
     var kind: Kind
     var appearance: String
     var pockets: [String: Item]
+    
+    static func ==(lhs: NonPlayer, rhs: NonPlayer) -> Bool {
+        return lhs.name == rhs.name &&
+        lhs.appearance == rhs.appearance &&
+        lhs.kind == lhs.kind
+    }
     
     init(name: String, pronouns: String, kind: Kind, appearance: String = "A mysterious being.", pockets: [String: Item] = [:]) {
         self.name = name

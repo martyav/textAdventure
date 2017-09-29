@@ -323,6 +323,10 @@ class Area1: BasicInstructions {
                 if object.characters.last == "s" && object != "grass" {
                     return "You take the \(object) and put them in your fanny pack."
                 } else {
+                    if object == "ashtray" && player.here == bedroom {
+                        bedroom.description = "You find yourself inside a shotgun shack. This narrow room is dominated by a queen-size MATTRESS that lies flat on the floor. A tangle of twinkling FAIRYLIGHTS covers the ceiling. On the MATTRESS are some torn NAPKINS."
+                    }
+                    
                     return "You take the \(object) and put it in your fanny pack."
                 }
             }
