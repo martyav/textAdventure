@@ -49,6 +49,14 @@ class InputResponder {
             if instructionManual is Area1 == false {
                 instructionManual = area1
             }
+//        case cityLimits:
+//            if instructionManual is Area2 == false {
+//                instructionManual = area2
+//            }
+//        case footOfSpire:
+//            if instructionManual is Area3 == false {
+//                instructionManual = area3
+//            }
         default:
             print("")
         }
@@ -64,7 +72,9 @@ class InputResponder {
         let firstWord = individualWords[0]
         let lastWord = individualWords[individualWords.count - 1]
         
-        guard instructionManual.keywords.contains(firstWord) || instructionManual.synonymsForTravel.contains(firstWord) else {
+        let allowableWords = instructionManual.keywords + instructionManual.magicwords + instructionManual.synonymsForTravel
+        
+        guard allowableWords.contains(firstWord) else {
             return "Huh?"
         }
         
@@ -98,6 +108,8 @@ class InputResponder {
             return instructionManual.help()
         case "left", "right", "down", "up":
             return instructionManual.travel(input)
+        case _ where instructionManual.magicwords.contains(firstWord):
+            return instructionManual.magic(input)
         case "repeat":
             return repeatLast()
         case "exits":

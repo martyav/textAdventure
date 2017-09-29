@@ -11,6 +11,7 @@ import Foundation
 protocol InstructionManual {
     var keywords: [String] { get }
     var synonymsForTravel: [String] { get }
+    var magicwords: [String] { get }
     
     func whatsMy(_ word: String) -> String
     func look(at thing: String) -> String
@@ -23,6 +24,7 @@ protocol InstructionManual {
     func exits() -> String
     func help() -> String
     func say(_ input: String) -> String
+    func magic(_ input: String) -> String
     func existentialism() -> String
 }
 
@@ -75,6 +77,12 @@ class BasicInstructions: InstructionManual {
         , "travel"
         , "stomp"
     ]
+    
+    var magicwords: [String] = ["xyzzy"]
+    
+    func magic(_ input: String) -> String {
+        return "Nothing happens."
+    }
     
     func say(_ input: String) -> String {
         return "You say, \"\(input)\"."
@@ -281,7 +289,15 @@ class BasicInstructions: InstructionManual {
 }
 
 class Area1: BasicInstructions {
-  override  func travel(_ direction: String) -> String {
+    override var magicwords: [String] {
+        get {
+            return ["KTSS", "ZUCKTOWN"]
+        } set {
+            // empty because we only want ktss & zucktown
+        }
+    }
+    
+    override  func travel(_ direction: String) -> String {
         let error = "You can't go there!"
         
         if player.here == gate && direction == "gate" || direction == "fence" {
@@ -299,7 +315,7 @@ class Area1: BasicInstructions {
     
     override func say(_ input: String) -> String {
         if player.here == werewolfPark {
-           return wolfConversation(input)
+            return wolfConversation(input)
         }
         
         if player.here == secondBasement {
@@ -307,6 +323,18 @@ class Area1: BasicInstructions {
         }
         
         return "You say, \"\(input)\"."
+    }
+    
+    override func magic(_ input: String) -> String {
+        guard player.here.objects[Car.name] != nil else {
+            return "Nothing happens."
+        }
+        if input == "KTSS" {
+            return ""
+        } else if input == "ZUCKTOWN" {
+            return ""
+        }
+        return "?"
     }
     
     override func take(_ object: String) -> String {
@@ -340,7 +368,20 @@ class Area1: BasicInstructions {
         
         if item == "truck" && player.here.objects[Truck.name] != nil {
             if !Truck.isAllowedOn() {
-                return "You try to hitch a ride on the truck but it passes you by.\n\nMaybe try that car over there?"
+                player.here.objects[Car.name] = Car
+                return "You try to hitch a ride on the TRUCK but it passes you by.\n\nMaybe try that CAR over there?"
+            }
+        }
+        
+        if item == "car" && player.here.objects[Car.name] != nil {
+            print("You try to hitch a ride in a CAR. A self-driving vehicle pulls up alongside you. The door automatically opens. There is no one else inside./n/nThe CAR says, in a halting voice, \"Would you like to go for a ride?\"")
+            let response = readLine()
+            if response == "yes" || response == "say yes" {
+                return "You get in the car.\n\nYou see a touchscreen listing possible destinations./n/nThere are only two that sound interesting to you right now./n/nThey are:/n* Konstantin Tsiolkovsky Stairway to the Sky & Fast Transit (KTSS) /n* ZUCKTOWN"
+            } else if response == "no" || response == "say no" {
+                return "You shut the door. The CAR drives away."
+            } else {
+                return "This CAR is particularly dumb and only understands yes or no responses."
             }
         }
         
@@ -417,7 +458,7 @@ class Area1: BasicInstructions {
                 if player.here.npcs[Cookiepuss.name] != nil {
                     return "You put the stuff inside the BAGGY in your PIPE and smoke it. You pass the pipe around. You start to feel different.\n\nYou stare at your hands.\n\nThese hands...these fuzzy Monster hands...these used to be Human hands.\n\nYou fiddle with the strap reinforcing the velcro flap on your arm.\n\nYou never asked for this body. Your parents decided, long ago, that you would be fuzzy and red. Sometimes you wish you were blue, or yellow, or green. You could get it done, if you really wanted it.\n\nYou wonder what your face would have looked like if you had the choice. You can change your face. You can have all sorts of faces. But looking more Human is illegal...\n\n\(Cookiepuss.name) passes you the pipe back."
                 }
-    
+                
                 return "You put the stuff inside the BAGGY in your PIPE and smoke it."            } else if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil {
                 return "You hold the LIGHTER up to the PIPE. It gets hot, but the PIPE is still empty."
             } else if player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {

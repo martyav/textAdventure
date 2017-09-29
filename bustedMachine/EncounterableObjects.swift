@@ -56,6 +56,7 @@ let Poster: Item = Item(name: "POSTER", description: "This is a poster advertisi
 let SecretDoor: Item = Item(name: "DOOR", description: "This is a secret door, carefully painted to look like the rest of the wall. It has a LOCK on it.", pocketable: false, contents: [Lock.name: Lock])
 
 let Truck: Vehicle = Vehicle(name: "TRUCK", description: "This is a big truck. It has no driver. There are bright lights along the sides and across the back and grill. It is drafting behind the truck ahead of it.", allowedOn: false)
+let Car: Vehicle = Vehicle(name: "CAR", description: "This is a car. It's two seats wide and six seats long, with cabinets and racks along the left side for holding luggage. There's a touch screen on the door where you can tap in your destination.", allowedOn: true)
 let Lights: Building = Building(name: "LIGHTS", description: "This is a distant cluster of lights. It's a city, but it's far away. Your family lives there.", allowedIn: false)
 var ShotgunShack: Building = Building(name: "SHACK", description: "This is a shotgun shack. The rooms in this building come one after another, back to front. Someone appears to have remodeled it to add extra rooms, though. The door has a LOCK.", allowedIn: false)
 let Spire: Building = Building(name: "SPIRE", description: "This is a very tall spire. It seems to have no end. There are many large vehicles buzzing around it. They come up to the balconies, hover for a while, then fly off.", allowedIn: false)
