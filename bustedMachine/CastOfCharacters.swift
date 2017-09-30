@@ -24,6 +24,13 @@ let AnonymousActor2 = NonPlayer(name: "Bernice Ng", pronouns: PronounSet.she, ki
 
 let AnonymousActor3 = NonPlayer(name: "Chilterverk", pronouns: PronounSet.he, kind: .Tresson)
 
+func costumeArea1Cast() {
+    Werewolf.appearance = "\(Werewolf.name) is a Monster. \(Werewolf.pronouns[0].capitalized) has big googly eyes, floppy ears, and a long snout. \(Werewolf.pronouns[0].capitalized) is covered in blue fur. \(Werewolf.pronouns[0].capitalized) wears a flannel shirt, a fanny pack, cargo shorts, and white socks with black sandals."
+    Cookiepuss.appearance = "\(Cookiepuss.name) is a Monster. \(Cookiepuss.pronouns[0].capitalized) has big, googly eyes, shaggy orange hair, droopy pink eyelids, and a crooked pink nose. \(Cookiepuss.pronouns[0].capitalized) is covered in pink felt and orange fur. \(Cookiepuss.pronouns[0].capitalized) wears a purple trucker cap, black high-top sneakers, a fanny pack, and a jock strap."
+    Possum.appearance = "\(Possum.name) is a Monster. \(Possum.pronouns[0].capitalized) has big, googly eyes, a pointy snout, spiky green hair, and black bat-like ears. \(Possum.pronouns[0].capitalized) is covered in stained white felt. \(Possum.pronouns[0].capitalized) wears a septum piercing, fishnets, a fanny pack, leather hot pants, and black boots."
+    FutureCreep.appearance = "\(FutureCreep.name) is a Monster. \(FutureCreep.pronouns[0].capitalized) has square eyes attached to an eyeglass frame, bob-cut blue hair, and thick eyebrows. \(FutureCreep.pronouns[0].capitalized) is covered in bluish green fur. \(FutureCreep.pronouns[0].capitalized) wears an open flannel shirt, a tie-dye shirt, a fanny pack, and green cut-off jeans."
+}
+
 func randomlyPickActor() -> NonPlayer {
     AnonymousActor1.appearance = "\(AnonymousActor1.name) is an unusually tall and slender Hatchasee actor. \(AnonymousActor1.pronouns[0].capitalized) often plays Human teens, even though \(AnonymousActor1.pronouns[0]) is currently 47. In this episode, \(AnonymousActor1.pronouns[0]) is playing the role of Elijah Wood, a classical actor. It is a period drama about Hollywood."
     AnonymousActor2.appearance = "\(AnonymousActor2.name) is a delicately beautiful Greffle actor. \(AnonymousActor2.pronouns[0].capitalized) often plays action heroes, but \(AnonymousActor1.pronouns[0]) has started moving into romantic lead roles. It's a difficult balancing act, which infuses \(AnonymousActor1.pronouns[2]) roles with a great deal of poignancy."

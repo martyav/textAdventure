@@ -202,11 +202,11 @@ class BasicInstructions: InstructionManual {
     }
     
     func look(at thing: String) -> String {
-        if let found = area.allNames[thing] {
+        if let found = self.area.allNames[thing] {
             return found.description
         }
         
-        if let found = player.here.npcs[thing.capitalized] {
+        if let found = self.player.here.npcs[thing.capitalized] {
             return found.appearance
         }
         

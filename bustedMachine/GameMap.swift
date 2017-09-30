@@ -8,13 +8,7 @@
 
 import Foundation
 
-
 func generateArea1() -> Graph {
-    Werewolf.appearance = "\(Werewolf.name) is a Monster. \(Werewolf.pronouns[0].capitalized) has big googly eyes, floppy ears, and a long snout. \(Werewolf.pronouns[0].capitalized) is covered in blue fur. \(Werewolf.pronouns[0].capitalized) wears a flannel shirt, a fanny pack, cargo shorts, and white socks with black sandals."
-    Cookiepuss.appearance = "\(Cookiepuss.name) is a Monster. \(Cookiepuss.pronouns[0].capitalized) has big, googly eyes, shaggy orange hair, droopy pink eyelids, and a crooked pink nose. \(Cookiepuss.pronouns[0].capitalized) is covered in pink felt and orange fur. \(Cookiepuss.pronouns[0].capitalized) wears a purple trucker cap, black high-top sneakers, a fanny pack, and a jock strap."
-    Possum.appearance = "\(Possum.name) is a Monster. \(Possum.pronouns[0].capitalized) has big, googly eyes, a pointy snout, spiky green hair, and black bat-like ears. \(Possum.pronouns[0].capitalized) is covered in stained white felt. \(Possum.pronouns[0].capitalized) wears a septum piercing, fishnets, a fanny pack, leather hot pants, and black boots."
-    FutureCreep.appearance = "\(FutureCreep.name) is a Monster. \(FutureCreep.pronouns[0].capitalized) has square eyes attached to an eyeglass frame, bob-cut blue hair, and thick eyebrows. \(FutureCreep.pronouns[0].capitalized) is covered in bluish green fur. \(FutureCreep.pronouns[0].capitalized) wears an open flannel shirt, a tie-dye shirt, a fanny pack, and green cut-off jeans."
-    
     let map = Graph(startingPoint: weedyField)
     
     map.add(newNode: nearHighway, to: weedyField, at: .Left)
@@ -57,6 +51,8 @@ func generateArea2() -> Graph {
 
 func generateArea3() -> Graph {
     let map = Graph(startingPoint: baseOfSpire)
+    
+    map.add(newNode: approachEntrance, to: baseOfSpire, at: .Up)
     
     return map
 }

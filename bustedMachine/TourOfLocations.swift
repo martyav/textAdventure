@@ -39,4 +39,5 @@ let cityLimits = Node(location: "City Limits", description: "You are on the city
 
 // MARK: - Area 3
 
-let baseOfSpire = Node(location: "Base of the Spire", description: "You travel up and up and up the long curve to the base of an enormous building that rises endlessly into the sky. If you squint, you can just barely make out the sight of another enormous spire off in the distance, as the curve continues around.")
+let baseOfSpire = Node(location: "Base of the Spire", description: "You travel up and up and up the long curve to the base of an enormous building that rises endlessly into the sky. A huge sign along the lower stretch of the building reads \"Konstantin Tsiolkovsky Stairway to the Sky & Fast Transit\". If you squint, you can just barely make out the sight of another enormous SPIRE off in the distance, as the curve continues around.", objects: [Spire.name: Spire])
+let approachEntrance = Node(location: "Approach Entrance", description: "You approach one of the entrances of the enormous building in front of you. There are electric TROLLEYS shuttling up and down the interior. There are many TOURISTS and COMMUTERS crowding the TROLLEYS. Above your head, ROBOTS, CRANES and DRONES haul CONTAINERS in and out of the building.")
