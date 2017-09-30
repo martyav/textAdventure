@@ -31,10 +31,12 @@ protocol InstructionManual {
 class BasicInstructions: InstructionManual {
     let player: Player
     var area: Graph
+    var magicwords: [String]
     
-    init(player: Player, area: Graph) {
+    init(player: Player, area: Graph, magicwords: [String] = ["xyzzy"]) {
         self.player = player
         self.area = area
+        self.magicwords = magicwords
     }
     
     let keywords = [
@@ -77,8 +79,6 @@ class BasicInstructions: InstructionManual {
         , "travel"
         , "stomp"
     ]
-    
-    var magicwords: [String] = ["xyzzy"]
     
     func magic(_ input: String) -> String {
         return "Nothing happens."
@@ -289,12 +289,8 @@ class BasicInstructions: InstructionManual {
 }
 
 class Area1: BasicInstructions {
-    override var magicwords: [String] {
-        get {
-            return ["KTSS", "ZUCKTOWN"]
-        } set {
-            // empty because we only want ktss & zucktown
-        }
+    override init(player: Player, area: Graph, magicwords: [String] = ["ktss", "zucktown"]) {
+        super.init(player: player, area: area, magicwords: magicwords)
     }
     
     override  func travel(_ direction: String) -> String {
@@ -329,10 +325,13 @@ class Area1: BasicInstructions {
         guard player.here.objects[Car.name] != nil else {
             return "Nothing happens."
         }
-        if input == "KTSS" {
-            return ""
-        } else if input == "ZUCKTOWN" {
-            return ""
+        
+        if input == "ktss" {
+            player.here = baseOfSpire
+            return "You tap on the button that says...well, let's just call it KTSS from now on."
+        } else if input == "zucktown" {
+            player.here = cityLimits
+            return "You tap on the button that says ZUCKTOWN. It's the biggest zity aboard the H.S.S. Cloud Forge, and where your family lives."
         }
         return "?"
     }
@@ -369,15 +368,15 @@ class Area1: BasicInstructions {
         if item == "truck" && player.here.objects[Truck.name] != nil {
             if !Truck.isAllowedOn() {
                 player.here.objects[Car.name] = Car
-                return "You try to hitch a ride on the TRUCK but it passes you by.\n\nMaybe try that CAR over there?"
+                return "You try to hitch a ride on a TRUCK but it passes you by.\n\nMaybe try that CAR over there?"
             }
         }
         
         if item == "car" && player.here.objects[Car.name] != nil {
-            print("You try to hitch a ride in a CAR. A self-driving vehicle pulls up alongside you. The door automatically opens. There is no one else inside./n/nThe CAR says, in a halting voice, \"Would you like to go for a ride?\"")
+            print("You try to hitch a ride in a CAR. A self-driving vehicle pulls up alongside you. The door automatically opens. There is no one else inside.\n\nThe CAR says, in a halting voice, \"Would you like to go for a ride?\"\n>")
             let response = readLine()
             if response == "yes" || response == "say yes" {
-                return "You get in the car.\n\nYou see a touchscreen listing possible destinations./n/nThere are only two that sound interesting to you right now./n/nThey are:/n* Konstantin Tsiolkovsky Stairway to the Sky & Fast Transit (KTSS) /n* ZUCKTOWN"
+                return "You get in the car.\n\nYou see a touchscreen listing possible destinations.\n\nThere are only two that sound interesting to you right now.\n\nThey are:\n* Konstantin Tsiolkovsky Stairway to the Sky & Fast Transit (KTSS) \n* ZUCKTOWN"
             } else if response == "no" || response == "say no" {
                 return "You shut the door. The CAR drives away."
             } else {
@@ -515,7 +514,7 @@ class Area1: BasicInstructions {
         case "race":
             return "That's a rude question."
         case "class":
-            return "You're a humble citizen of the H.S.S. Cloud Mill, a Habitable Sapce Station sponsored by Dream Makers Absolute Zero Incorporated, The Twifoogle Company, Japan, India, Pakistan, Nigeria, the Manhattan-Brooklyn-Queens Collective (MBQC), Pacific Northwest Incorporated States (PNIS) & Unilab."
+            return "You're a humble citizen of the H.S.S. Cloud Forge, a Habitable Sapce Station sponsored by Dream Makers Absolute Zero Incorporated, The Twifoogle Company, Japan, India, Pakistan, Nigeria, the Manhattan-Brooklyn-Queens Collective (MBQC), Pacific Northwest Incorporated States (PNIS) & Unilab."
         case "job":
             return "You're unemployed."
         case "motivation":
@@ -543,3 +542,5 @@ class Area1: BasicInstructions {
 }
 
 class Area2: BasicInstructions {}
+
+class Area3: BasicInstructions {}

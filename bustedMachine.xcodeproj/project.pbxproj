@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		050EB0821F7F5C9D00C09710 /* TourOfLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050EB0811F7F5C9D00C09710 /* TourOfLocations.swift */; };
 		053F73DB1F79F2EE009E6F4A /* InstructionManual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F73DA1F79F2EE009E6F4A /* InstructionManual.swift */; };
 		053F73DD1F7ABDCD009E6F4A /* Pronoun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F73DC1F7ABDCD009E6F4A /* Pronoun.swift */; };
 		053F73DF1F7DA5B1009E6F4A /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F73DE1F7DA5B1009E6F4A /* Conversation.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		050EB0811F7F5C9D00C09710 /* TourOfLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourOfLocations.swift; sourceTree = "<group>"; };
 		053F73DA1F79F2EE009E6F4A /* InstructionManual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionManual.swift; sourceTree = "<group>"; };
 		053F73DC1F7ABDCD009E6F4A /* Pronoun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pronoun.swift; sourceTree = "<group>"; };
 		053F73DE1F7DA5B1009E6F4A /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				05F833721F6F1DAD00F117AC /* CastOfCharacters.swift */,
 				053F73DC1F7ABDCD009E6F4A /* Pronoun.swift */,
 				05F833661F6CF0F400F117AC /* GameMap.swift */,
+				050EB0811F7F5C9D00C09710 /* TourOfLocations.swift */,
 				05F833681F6CF12600F117AC /* Graph.swift */,
 			);
 			path = bustedMachine;
@@ -175,6 +178,7 @@
 				05F8336F1F6DE82D00F117AC /* InputResponder.swift in Sources */,
 				05F833651F6CEAE800F117AC /* Node.swift in Sources */,
 				053F73DD1F7ABDCD009E6F4A /* Pronoun.swift in Sources */,
+				050EB0821F7F5C9D00C09710 /* TourOfLocations.swift in Sources */,
 				053F73DB1F79F2EE009E6F4A /* InstructionManual.swift in Sources */,
 				05F833671F6CF0F400F117AC /* GameMap.swift in Sources */,
 				05F833631F6CEAC300F117AC /* Path.swift in Sources */,

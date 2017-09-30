@@ -43,23 +43,28 @@ class InputResponder {
     
     func rtfm() {
         let area1 = Area1(player: player, area: map)
+        let area2 = Area2(player: player, area: map)
+        let area3 = Area3(player: player, area: map)
         
         switch player.here {
         case weedyField:
             if instructionManual is Area1 == false {
-                instructionManual = area1
+                self.instructionManual = area1
             }
-//        case cityLimits:
-//            if instructionManual is Area2 == false {
-//                instructionManual = area2
-//            }
-//        case footOfSpire:
-//            if instructionManual is Area3 == false {
-//                instructionManual = area3
-//            }
+        case cityLimits:
+            if instructionManual is Area2 == false {
+                self.area = generateArea2()
+                self.instructionManual = area2
+            }
+        case baseOfSpire:
+            if instructionManual is Area3 == false {
+                self.area = generateArea3()
+                self.instructionManual = area3
+            }
         default:
             print("")
         }
+        print(responder.area.startingPoint.location)
     }
     
     func respond(to text: String) -> String {

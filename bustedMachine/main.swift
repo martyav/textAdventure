@@ -8,7 +8,7 @@
 
 import Foundation
 
-let map = generateSmoke()
+let map = generateArea1()
 
 print("Hello. What is your name?")
 print(">")
