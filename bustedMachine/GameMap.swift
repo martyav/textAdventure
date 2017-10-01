@@ -46,6 +46,7 @@ func generateArea1() -> Graph {
 func generateArea2() -> Graph {
     let map = Graph(startingPoint: cityLimits)
     
+    map.add(newNode: enterCity, to: cityLimits, at: .Down)
     return map
 }
 

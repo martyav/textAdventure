@@ -20,7 +20,7 @@ struct PronounSet {
     static let you = "you/you/your"
     
     static func randomPick() -> String {
-        let pronouns = [they, he, she, ze, e]
+        let pronouns = [he, she, ze, e]
         let randomIndex = Int(arc4random_uniform(UInt32(pronouns.count)))
         return pronouns[randomIndex]
     }

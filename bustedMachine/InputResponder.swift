@@ -48,11 +48,12 @@ class InputResponder {
         switch player.here {
         case weedyField:
             if instructionManual is Area1 == false {
-                newMap = generateArea1()
-                newManual = Area1(player: player, area: newMap)
+               // newMap = generateArea1()
+               // newManual = Area1(player: player, area: newMap)
+                self.instructionManual = Area1(player: player, area: area)
                 costumeArea1Cast()
-                self.instructionManual = newManual
-                self.area = newMap
+               // self.instructionManual = newManual
+               // self.area = newMap
             }
         case cityLimits:
             if instructionManual is Area2 == false {

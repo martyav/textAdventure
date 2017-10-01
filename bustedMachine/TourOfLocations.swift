@@ -35,7 +35,8 @@ let secondBasement = Node(location: "Second Basement", description: "You find yo
 
 // MARK: - Area 2
 
-let cityLimits = Node(location: "City Limits", description: "You are on the city limits of Zucktown, a city named after one of the founding fathers of Twifoogle. There is a big blue sign with a thumbs up icon greeting you as you approach.")
+let cityLimits = Node(location: "City Limits", description: "You are on the city limits of Zucktown, a city named after one of the founding fathers of Twifoogle. There is a big blue SIGN with a thumbs up icon greeting you as you approach.", objects: [Sign.name: Sign])
+let enterCity = Node(location: "Enter City", description: "You enter the city of Zucktown. It is filled with tall buildings capped by hanging gardens. Electric bikes nd scooters fill the streets. Drones fly overhead, carrying packages. Pigeons, guinea pigs, and rabbits pick at trash in the alleyways. Your view is obscured by mist.")
 
 // MARK: - Area 3
 

@@ -441,7 +441,14 @@ class Area1: BasicInstructions {
         case "pipe":
             if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
                 if player.here.npcs[Cookiepuss.name] != nil {
-                    return "You put the stuff inside the BAGGY in your PIPE and smoke it. You pass the pipe around. You start to feel different.\n\nYou stare at your hands.\n\nThese hands...these fuzzy Monster hands...these used to be Human hands.\n\nYou fiddle with the strap reinforcing the velcro flap on your arm.\n\nYou never asked for this body. Your parents decided, long ago, that you would be fuzzy and red. Sometimes you wish you were blue, or yellow, or green. You could get it done, if you really wanted it.\n\nYou wonder what your face would have looked like if you had the choice. You can change your face. You can have all sorts of faces. But looking more Human is illegal...\n\n\(Cookiepuss.name) passes you the pipe back."
+                    print("You put the stuff inside the BAGGY in your PIPE and smoke it. You pass the pipe around. You start to feel different.\n\nYou stare at your hands.\n\nThese hands...these fuzzy Monster hands...these used to be Human hands.\n\nYou fiddle with the strap reinforcing the velcro flap on your arm.\n\nYou never asked for this body. Your parents decided, long ago, that you would be fuzzy and red. Sometimes you wish you were blue, or yellow, or green. You could get it done, if you really wanted it.\n\nYou wonder what your face would have looked like if you had the choice. You can change your face. You can have all sorts of faces. But looking more Human is illegal...\n\n\(Cookiepuss.name) passes you the pipe back. Smoke?\n")
+                    print(">")
+                    let response = readLine()
+                    if response == "yes" || response == "yeah" || response == "yep" || response == "yup" {
+                        return "You smoke. You feel very odd about being alive. Why are you here?\n\nYou contemplate many questions covered by the WHAT'S MY command."
+                    } else if response == "no" || response == "nope" || response == "nah" {
+                        return "You decline to smoke again."
+                    }
                 }
                 
                 return "You put the stuff inside the BAGGY in your PIPE and smoke it."
@@ -455,7 +462,14 @@ class Area1: BasicInstructions {
         case "lighter":
             if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
                 if player.here.npcs[Cookiepuss.name] != nil {
-                    return "You put the stuff inside the BAGGY in your PIPE and smoke it. You pass the pipe around. You start to feel different.\n\nYou stare at your hands.\n\nThese hands...these fuzzy Monster hands...these used to be Human hands.\n\nYou fiddle with the strap reinforcing the velcro flap on your arm.\n\nYou never asked for this body. Your parents decided, long ago, that you would be fuzzy and red. Sometimes you wish you were blue, or yellow, or green. You could get it done, if you really wanted it.\n\nYou wonder what your face would have looked like if you had the choice. You can change your face. You can have all sorts of faces. But looking more Human is illegal...\n\n\(Cookiepuss.name) passes you the pipe back."
+                    print("You put the stuff inside the BAGGY in your PIPE and smoke it. You pass the pipe around. You start to feel different.\n\nYou stare at your hands.\n\nThese hands...these fuzzy Monster hands...these used to be Human hands.\n\nYou fiddle with the strap reinforcing the velcro flap on your arm.\n\nYou never asked for this body. Your parents decided, long ago, that you would be fuzzy and red. Sometimes you wish you were blue, or yellow, or green. You could get it done, if you really wanted it.\n\nYou wonder what your face would have looked like if you had the choice. You can change your face. You can have all sorts of faces. But looking more Human is illegal...\n\n\(Cookiepuss.name) passes you the pipe back. Smoke?\n")
+                        print(">")
+                    let response = readLine()
+                    if response == "yes" || response == "yeah" || response == "yep" || response == "yup" {
+                        return "You smoke. You feel very odd about being alive. Why are you here?\n\nYou contemplate many questions covered by the WHAT'S MY command."
+                    } else if response == "no" || response == "nope" || response == "nah" {
+                        return "You decline to smoke again."
+                    }
                 }
                 
                 return "You put the stuff inside the BAGGY in your PIPE and smoke it."            } else if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil {
@@ -468,7 +482,14 @@ class Area1: BasicInstructions {
         case "baggy", "baggie", "bag":
             if player.pockets["PIPE"] != nil && player.pockets["LIGHTER"] != nil && player.pockets["BAGGY"] != nil {
                 if player.here.npcs[Cookiepuss.name] != nil {
-                    return "You put the stuff inside the BAGGY in your PIPE and smoke it. You pass the pipe around. You start to feel different.\n\nYou stare at your hands.\n\nThese hands...these fuzzy Monster hands...these used to be Human hands.\n\nYou fiddle with the strap reinforcing the velcro flap on your arm.\n\nYou never asked for this body. Your parents decided, long ago, that you would be fuzzy and red. Sometimes you wish you were blue, or yellow, or green. You could get it done, if you really wanted it.\n\nYou wonder what your face would have looked like if you had the choice. You can change your face. You can have all sorts of faces. But looking more Human is illegal...\n\n\(Cookiepuss.name) passes you the pipe back."
+                    print("You put the stuff inside the BAGGY in your PIPE and smoke it. You pass the pipe around. You start to feel different.\n\nFuture giggles and asks if you're alright.\n\n\"It's just...look around us. We're Monsters. Isn't that strange? Why are we even are what we are?,\" you say.\n\nYou stare at your hands.\n\nThese hands...these fuzzy Monster hands...these used to be Human hands.\n\nYou fiddle with the strap reinforcing the velcro flap on your arm.\n\nYou never asked for this body. Your parents decided, long ago, that you would be fuzzy and red. Sometimes you wish you were blue, or yellow, or green. You could get it done, if you really wanted it.\n\nYou wonder what your face would have looked like if you had the choice. You can change your face. You can have all sorts of faces. But looking more Human is illegal...\n\n\(Cookiepuss.name) passes you the pipe back. Smoke?\n")
+                    print(">")
+                    let response = readLine()
+                    if response == "yes" || response == "yeah" || response == "yep" || response == "yup" {
+                        return "You smoke. You feel very odd about being alive. Why are you here?\n\nYou contemplate many questions covered by the WHAT'S MY command."
+                    } else if response == "no" || response == "nope" || response == "nah" {
+                        return "You decline to smoke again."
+                    }
                 }
                 
                 return "You put the stuff inside the BAGGY in your PIPE and smoke it."
@@ -505,6 +526,8 @@ class Area1: BasicInstructions {
     override func whatsMy(_ query: String) -> String {
         switch query {
             
+        case "___":
+            return "You are not sure what to say. You stare blankly at your hands."
         case "name":
             return "Your name is \(player.name)."
         case "age":
@@ -521,10 +544,10 @@ class Area1: BasicInstructions {
             return "You don't have a lot of motivation. You like to hang out, meet new people, explore, and smoke with your pals."
         case "quest":
             return "You don't have a 'quest'. You think that calling whatever your goal in life is your quest is actually kind of pretentious."
-        case "goal":
+        case "goal", "pupose", "goals", "meaning":
             return "You don't have any overarching goals. You like having fun, meeting people, smoking your pipe, exploring..."
         case "deal":
-            return "You're kind of bored and lonely. It's tough being a monster sometimes. A lot of people think you're creepy just for existing. Others don't take you seriously, based purely on your appearance. Maybe the fanny pack and boxers don't help, but if they're going to think that anyway, why bother fitting in?"
+            return "You're kind of bored and lonely. It's tough being a Monster sometimes. A lot of people think you're creepy just for existing. Others don't take you seriously, based purely on your appearance. Maybe the fanny pack and boxers don't help, but if they're going to think that anyway, why bother fitting in?"
         case "gender":
             return "You're still sorting that out, but you generally go by \(player.pronouns.joined(separator: "/")) pronouns when out in public."
         case "pronouns":
@@ -535,12 +558,52 @@ class Area1: BasicInstructions {
             return "Single."
         case "sex":
             return "You're still a virgin."
+        case "life":
+            return "Your life isn't about anything in particular. You're a fuzzy Monster and you live aboard a big donut spinning through space. You like going around, talking to folks, looking at things, going for rides..."
+        case "hands":
+            return "Your hands are fuzzy and red. They are powered by tiny motors and pulleys further up your arm."
+        case "god":
+            return "There's no god up here."
         default:
             return "That's a weird question."
         }
     }
 }
 
-class Area2: BasicInstructions {}
+class Area2: BasicInstructions {
+    override init(player: Player, area: Graph, magicwords: [String] = ["ktss"]) {
+        super.init(player: player, area: area, magicwords: magicwords)
+    }
+    
+    override func magic(_ input: String) -> String {
+        if input == "ktss" && player.here == area.startingPoint {
+            player.here = baseOfSpire
+            player.here.objects[Car.name] = Car
+            return "You tap on the button that says...well, let's just call it KTSS from now on."
+        }
+        
+        return "Nothing happens"
+    }
+}
 
-class Area3: BasicInstructions {}
+class Area3: BasicInstructions {
+    override init(player: Player, area: Graph, magicwords: [String] = ["zucktown"]) {
+        super.init(player: player, area: area, magicwords: magicwords)
+    }
+    
+    override func magic(_ input: String) -> String {
+        if input == "zucktown" && player.here == area.startingPoint {
+            player.here = cityLimits
+            player.here.objects[Car.name] = Car
+            return "You tap on the button that says ZUCKTOWN. It's the biggest zity aboard the H.S.S. Cloud Forge, and where your family lives."
+        }
+        
+        return "Nothing happens"
+    }
+    
+//    override func use(_ item: String) -> String {
+//        if item == Car.name && player.here == area.startingPoint {
+//            return "You get in the car.\n\nYou see a touchscreen listing possible destinations.\n\nThere are only two that sound interesting to you right now.\n\nThey are:\n* Konstantin Tsiolkovsky Stairway to the Sky & Fast Transit (KTSS) \n* ZUCKTOWN"
+//        }
+//    }
+}
